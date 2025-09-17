@@ -57,6 +57,7 @@ public interface ILightlessHub
     Task<bool> GroupJoinFinalize(GroupJoinDto passwordedGroup);
     Task GroupLeave(GroupDto group);
     Task GroupRemoveUser(GroupPairDto groupPair);
+    Task<GroupProfileDto> GroupGetProfile(GroupDto dto);
     Task GroupSetProfile(GroupProfileDto dto);
     Task GroupSetUserInfo(GroupPairUserInfoDto groupPair);
     Task<List<GroupFullInfoDto>> GroupsGetAll();
