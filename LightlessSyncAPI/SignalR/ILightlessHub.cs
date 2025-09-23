@@ -55,6 +55,7 @@ public interface ILightlessHub
     Task<List<BannedGroupUserDto>> GroupGetBannedUsers(GroupDto group);
     Task<GroupJoinInfoDto> GroupJoin(GroupPasswordDto passwordedGroup);
     Task<bool> GroupJoinFinalize(GroupJoinDto passwordedGroup);
+    Task<GroupJoinInfoDto> GroupJoinHashed(GroupJoinHashedDto dto);
     Task GroupLeave(GroupDto group);
     Task GroupRemoveUser(GroupPairDto groupPair);
     Task GroupSetUserInfo(GroupPairUserInfoDto groupPair);
@@ -63,6 +64,15 @@ public interface ILightlessHub
     Task<int> GroupPrune(GroupDto group, int days, bool execute);
 
     Task UserAddPair(UserDto user);
+    Task TryPairWithContentId(string otherCid, string myCid);
+
+    Task SetBroadcastStatus(string hashedCid, bool enabled, GroupBroadcastRequestDto? groupDto = null);
+    Task<bool> SetGroupBroadcastStatus(GroupBroadcastRequestDto dto);
+    Task<List<GroupJoinDto>> GetBroadcastedGroups(List<BroadcastStatusInfoDto> broadcastEntries);
+    Task<BroadcastStatusInfoDto?> IsUserBroadcasting(string hashedCid);
+    Task<BroadcastStatusBatchDto> AreUsersBroadcasting(List<string> hashedCids);
+    Task<TimeSpan?> GetBroadcastTtl(string hashedCid);
+
     Task UserDelete();
     Task<List<OnlineUserIdentDto>> UserGetOnlinePairs(CensusDataDto? censusDataDto);
     Task<List<UserFullPairDto>> UserGetPairedClients();
