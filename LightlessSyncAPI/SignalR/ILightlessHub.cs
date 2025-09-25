@@ -21,6 +21,7 @@ public interface ILightlessHub
     Task Client_GroupPairJoined(GroupPairFullInfoDto groupPairInfoDto);
     Task Client_GroupPairLeft(GroupPairDto groupPairDto);
     Task Client_GroupSendFullInfo(GroupFullInfoDto groupInfo);
+    Task Client_GroupSendProfile (GroupProfileDto groupInfo);
     Task Client_GroupSendInfo(GroupInfoDto groupInfo);
     Task Client_ReceiveServerMessage(MessageSeverity messageSeverity, string message);
     Task Client_UpdateSystemInfo(SystemInfoDto systemInfo);
@@ -58,6 +59,8 @@ public interface ILightlessHub
     Task<GroupJoinInfoDto> GroupJoinHashed(GroupJoinHashedDto dto);
     Task GroupLeave(GroupDto group);
     Task GroupRemoveUser(GroupPairDto groupPair);
+    Task<GroupProfileDto> GroupGetProfile(GroupDto dto);
+    Task GroupSetProfile(GroupProfileDto dto);
     Task GroupSetUserInfo(GroupPairUserInfoDto groupPair);
     Task<List<GroupFullInfoDto>> GroupsGetAll();
     Task GroupUnbanUser(GroupPairDto groupPair);
