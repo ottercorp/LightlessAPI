@@ -8,4 +8,4 @@ namespace LightlessSync.API.Dto.Group;
 public record GroupPasswordDto(GroupData Group, string Password) : GroupDto(Group);
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record GroupJoinDto(GroupData Group, string Password, GroupUserPreferredPermissions GroupUserPreferredPermissions, bool Finder = false) : GroupPasswordDto(Group, Password);
+public record GroupJoinDto(GroupData Group, string Password, GroupUserPreferredPermissions GroupUserPreferredPermissions) : GroupPasswordDto(Group, Password);

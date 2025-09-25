@@ -50,6 +50,7 @@ public interface ILightlessHub
     Task GroupChangeOwnership(GroupPairDto groupPair);
     Task<bool> GroupChangePassword(GroupPasswordDto groupPassword);
     Task GroupClear(GroupDto group);
+    Task GroupClearFinder(GroupDto group);
     Task<GroupJoinDto> GroupCreate();
     Task<List<string>> GroupCreateTempInvite(GroupDto group, int amount);
     Task GroupDelete(GroupDto group);
