@@ -1,4 +1,4 @@
-﻿using LightlessSync.API.Data;
+using LightlessSync.API.Data;
 using LightlessSync.API.Data.Enum;
 using LightlessSync.API.Dto;
 using LightlessSync.API.Dto.CharaData;
@@ -82,6 +82,7 @@ public interface ILightlessHub
     Task<List<UserFullPairDto>> UserGetPairedClients();
     Task<UserProfileDto> UserGetProfile(UserDto dto);
     Task UserPushData(UserCharaDataMessageDto dto);
+    Task UserUpdateVanityColors(UserVanityColorsDto dto);
     Task UserRemovePair(UserDto userDto);
     Task UserSetProfile(UserProfileDto userDescription);
     Task UserUpdateDefaultPermissions(DefaultPermissionsDto defaultPermissionsDto);
