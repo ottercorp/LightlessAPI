@@ -74,7 +74,7 @@ public interface ILightlessHub
     Task<bool> SetGroupBroadcastStatus(GroupBroadcastRequestDto dto);
     Task<List<GroupJoinDto>> GetBroadcastedGroups(List<BroadcastStatusInfoDto> broadcastEntries);
     Task<BroadcastStatusInfoDto?> IsUserBroadcasting(string hashedCid);
-    Task<BroadcastStatusBatchDto> AreUsersBroadcasting(List<string> hashedCids);
+    Task<BroadcastStatusBatchDto?> AreUsersBroadcasting(List<string> hashedCids);
     Task<TimeSpan?> GetBroadcastTtl(string hashedCid);
 
     Task UserDelete();
