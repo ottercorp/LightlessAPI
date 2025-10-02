@@ -24,6 +24,7 @@ public interface ILightlessHub
     Task Client_GroupSendProfile (GroupProfileDto groupInfo);
     Task Client_GroupSendInfo(GroupInfoDto groupInfo);
     Task Client_ReceiveServerMessage(MessageSeverity messageSeverity, string message);
+    Task Client_ReceiveBroadcastPairRequest(UserPairNotificationDto dto);
     Task Client_UpdateSystemInfo(SystemInfoDto systemInfo);
     Task Client_UserAddClientPair(UserPairDto dto);
     Task Client_UserReceiveCharacterData(OnlineUserCharaDataDto dataDto);
