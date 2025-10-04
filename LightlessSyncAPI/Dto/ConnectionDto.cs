@@ -10,6 +10,9 @@ public record ConnectionDto(UserData User)
     public int ServerVersion { get; set; }
     public bool IsAdmin { get; set; }
     public bool IsModerator { get; set; }
+    public bool HasVanity { get; set; }
+    public string? TextColorHex { get; set; }
+    public string? TextGlowColorHex { get; set; }
     public ServerInfo ServerInfo { get; set; } = new();
     public DefaultPermissionsDto DefaultPreferredPermissions { get; set; } = new();
 }

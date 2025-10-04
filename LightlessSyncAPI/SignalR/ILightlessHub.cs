@@ -1,4 +1,4 @@
-﻿using LightlessSync.API.Data;
+using LightlessSync.API.Data;
 using LightlessSync.API.Data.Enum;
 using LightlessSync.API.Dto;
 using LightlessSync.API.Dto.CharaData;
@@ -21,8 +21,10 @@ public interface ILightlessHub
     Task Client_GroupPairJoined(GroupPairFullInfoDto groupPairInfoDto);
     Task Client_GroupPairLeft(GroupPairDto groupPairDto);
     Task Client_GroupSendFullInfo(GroupFullInfoDto groupInfo);
+    Task Client_GroupSendProfile (GroupProfileDto groupInfo);
     Task Client_GroupSendInfo(GroupInfoDto groupInfo);
     Task Client_ReceiveServerMessage(MessageSeverity messageSeverity, string message);
+    Task Client_ReceiveBroadcastPairRequest(UserPairNotificationDto dto);
     Task Client_UpdateSystemInfo(SystemInfoDto systemInfo);
     Task Client_UserAddClientPair(UserPairDto dto);
     Task Client_UserReceiveCharacterData(OnlineUserCharaDataDto dataDto);
@@ -49,25 +51,39 @@ public interface ILightlessHub
     Task GroupChangeOwnership(GroupPairDto groupPair);
     Task<bool> GroupChangePassword(GroupPasswordDto groupPassword);
     Task GroupClear(GroupDto group);
+    Task GroupClearFinder(GroupDto group);
     Task<GroupJoinDto> GroupCreate();
     Task<List<string>> GroupCreateTempInvite(GroupDto group, int amount);
     Task GroupDelete(GroupDto group);
     Task<List<BannedGroupUserDto>> GroupGetBannedUsers(GroupDto group);
     Task<GroupJoinInfoDto> GroupJoin(GroupPasswordDto passwordedGroup);
     Task<bool> GroupJoinFinalize(GroupJoinDto passwordedGroup);
+    Task<GroupJoinInfoDto> GroupJoinHashed(GroupJoinHashedDto dto);
     Task GroupLeave(GroupDto group);
     Task GroupRemoveUser(GroupPairDto groupPair);
+    Task<GroupProfileDto> GroupGetProfile(GroupDto dto);
+    Task GroupSetProfile(GroupProfileDto dto);
     Task GroupSetUserInfo(GroupPairUserInfoDto groupPair);
     Task<List<GroupFullInfoDto>> GroupsGetAll();
     Task GroupUnbanUser(GroupPairDto groupPair);
     Task<int> GroupPrune(GroupDto group, int days, bool execute);
 
     Task UserAddPair(UserDto user);
+    Task TryPairWithContentId(string otherCid, string myCid);
+
+    Task SetBroadcastStatus(string hashedCid, bool enabled, GroupBroadcastRequestDto? groupDto = null);
+    Task<bool> SetGroupBroadcastStatus(GroupBroadcastRequestDto dto);
+    Task<List<GroupJoinDto>> GetBroadcastedGroups(List<BroadcastStatusInfoDto> broadcastEntries);
+    Task<BroadcastStatusInfoDto?> IsUserBroadcasting(string hashedCid);
+    Task<BroadcastStatusBatchDto?> AreUsersBroadcasting(List<string> hashedCids);
+    Task<TimeSpan?> GetBroadcastTtl(string hashedCid);
+
     Task UserDelete();
     Task<List<OnlineUserIdentDto>> UserGetOnlinePairs(CensusDataDto? censusDataDto);
     Task<List<UserFullPairDto>> UserGetPairedClients();
     Task<UserProfileDto> UserGetProfile(UserDto dto);
     Task UserPushData(UserCharaDataMessageDto dto);
+    Task UserUpdateVanityColors(UserVanityColorsDto dto);
     Task UserRemovePair(UserDto userDto);
     Task UserSetProfile(UserProfileDto userDescription);
     Task UserUpdateDefaultPermissions(DefaultPermissionsDto defaultPermissionsDto);
