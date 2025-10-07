@@ -9,7 +9,7 @@ namespace LightlessSync.API.SignalR;
 
 public interface ILightlessHub
 {
-    const int ApiVersion = 33;
+    const int ApiVersion = 34;
     const string Path = "/lightless";
 
     Task<bool> CheckClientHealth();
@@ -69,14 +69,14 @@ public interface ILightlessHub
     Task<int> GroupPrune(GroupDto group, int days, bool execute);
 
     Task UserAddPair(UserDto user);
-    Task TryPairWithContentId(string otherCid, string myCid);
+    Task TryPairWithContentId(string otherCid);
 
-    Task SetBroadcastStatus(string hashedCid, bool enabled, GroupBroadcastRequestDto? groupDto = null);
+    Task SetBroadcastStatus(bool enabled, GroupBroadcastRequestDto? groupDto = null);
     Task<bool> SetGroupBroadcastStatus(GroupBroadcastRequestDto dto);
     Task<List<GroupJoinDto>> GetBroadcastedGroups(List<BroadcastStatusInfoDto> broadcastEntries);
     Task<BroadcastStatusInfoDto?> IsUserBroadcasting(string hashedCid);
     Task<BroadcastStatusBatchDto?> AreUsersBroadcasting(List<string> hashedCids);
-    Task<TimeSpan?> GetBroadcastTtl(string hashedCid);
+    Task<TimeSpan?> GetBroadcastTtl();
 
     Task UserDelete();
     Task<List<OnlineUserIdentDto>> UserGetOnlinePairs(CensusDataDto? censusDataDto);
