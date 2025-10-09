@@ -18,6 +18,7 @@ public class LightlessFiles
     public const string ServerFiles_Upload = "upload";
     public const string ServerFiles_UploadMunged = "uploadMunged";
     public const string ServerFiles_DownloadServers = "downloadServers";
+    public const string ServerFiles_DirectDownload = "direct";
 
     public const string Distribution = "/dist";
     public const string Distribution_Get = "get";
@@ -41,6 +42,7 @@ public class LightlessFiles
     public static Uri ServerFilesUploadFullPath(Uri baseUri, string hash) => new(baseUri, ServerFiles + "/" + ServerFiles_Upload + "/" + hash);
     public static Uri ServerFilesUploadMunged(Uri baseUri, string hash) => new(baseUri, ServerFiles + "/" + ServerFiles_UploadMunged + "/" + hash);
     public static Uri ServerFilesGetDownloadServersFullPath(Uri baseUri) => new(baseUri, ServerFiles + "/" + ServerFiles_DownloadServers);
+    public static Uri ServerFilesDirectDownloadFullPath(Uri baseUri, string hash) => new(baseUri, ServerFiles + "/" + ServerFiles_DirectDownload + "/" + hash);
     public static Uri DistributionGetFullPath(Uri baseUri, string hash) => new(baseUri, Distribution + "/" + Distribution_Get + "?file=" + hash);
     public static Uri SpeedtestRunFullPath(Uri baseUri) => new(baseUri, Speedtest + "/" + Speedtest_Run);
     public static Uri MainSendReadyFullPath(Uri baseUri, string uid, Guid request) => new(baseUri, Main + "/" + Main_SendReady + "/" + "?uid=" + uid + "&requestId=" + request.ToString());
