@@ -82,6 +82,7 @@ public interface ILightlessHub
     Task<List<OnlineUserIdentDto>> UserGetOnlinePairs(CensusDataDto? censusDataDto);
     Task<List<UserFullPairDto>> UserGetPairedClients();
     Task<UserProfileDto> UserGetProfile(UserDto dto);
+    Task<UserProfileDto?> UserGetLightfinderProfile(string hashedCid);
     Task UserPushData(UserCharaDataMessageDto dto);
     Task UserUpdateVanityColors(UserVanityColorsDto dto);
     Task UserRemovePair(UserDto userDto);
