@@ -2,5 +2,5 @@
 
 namespace LightlessSync.API.Dto.Group
 {
-    public record GroupProfileDto(GroupData Group, string? Description, string? Tags, string? PictureBase64) : GroupDto(Group);
+    public record GroupProfileDto(GroupData Group, string? Description, string? Tags, string? PictureBase64, bool? IsNsfw, bool? IsDisabled) : GroupDto(Group);
 }
