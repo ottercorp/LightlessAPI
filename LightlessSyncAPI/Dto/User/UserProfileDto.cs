@@ -4,4 +4,4 @@ using MessagePack;
 namespace LightlessSync.API.Dto.User;
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record UserProfileDto(UserData User, bool Disabled, bool? IsNSFW, string? ProfilePictureBase64, string? Description, int[]? Tags) : UserDto(User);
+public record UserProfileDto(UserData User, bool Disabled, bool? IsNSFW, string? ProfilePictureBase64, string? BannerPictureBase64, string? Description, int[]? Tags) : UserDto(User);
