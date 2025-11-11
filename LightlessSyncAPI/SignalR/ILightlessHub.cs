@@ -1,6 +1,7 @@
 using LightlessSync.API.Data;
 using LightlessSync.API.Data.Enum;
 using LightlessSync.API.Dto;
+using LightlessSync.API.Dto.Chat;
 using LightlessSync.API.Dto.CharaData;
 using LightlessSync.API.Dto.Group;
 using LightlessSync.API.Dto.User;
@@ -21,7 +22,7 @@ public interface ILightlessHub
     Task Client_GroupPairJoined(GroupPairFullInfoDto groupPairInfoDto);
     Task Client_GroupPairLeft(GroupPairDto groupPairDto);
     Task Client_GroupSendFullInfo(GroupFullInfoDto groupInfo);
-    Task Client_GroupSendProfile (GroupProfileDto groupInfo);
+    Task Client_GroupSendProfile(GroupProfileDto groupInfo);
     Task Client_GroupSendInfo(GroupInfoDto groupInfo);
     Task Client_ReceiveServerMessage(MessageSeverity messageSeverity, string message);
     Task Client_ReceiveBroadcastPairRequest(UserPairNotificationDto dto);
@@ -43,8 +44,11 @@ public interface ILightlessHub
     Task Client_GposeLobbyPushCharacterData(CharaDataDownloadDto charaDownloadDto);
     Task Client_GposeLobbyPushPoseData(UserData userData, PoseData poseData);
     Task Client_GposeLobbyPushWorldData(UserData userData, WorldData worldData);
+    Task Client_ChatReceive(ChatMessageDto message);
 
     Task<ConnectionDto> GetConnectionDto();
+    Task<IReadOnlyList<ZoneChatChannelInfoDto>> GetZoneChatChannels();
+    Task<IReadOnlyList<GroupChatChannelInfoDto>> GetGroupChatChannels();
 
     Task GroupBanUser(GroupPairDto dto, string reason);
     Task GroupChangeGroupPermissionState(GroupPermissionDto dto);
@@ -105,4 +109,8 @@ public interface ILightlessHub
     Task GposeLobbyPushCharacterData(CharaDataDownloadDto charaDownloadDto);
     Task GposeLobbyPushPoseData(PoseData poseData);
     Task GposeLobbyPushWorldData(WorldData worldData);
+    Task UpdateChatPresence(ChatPresenceUpdateDto presence);
+    Task SendChatMessage(ChatSendRequestDto request);
+    Task ReportChatMessage(ChatReportSubmitDto request);
+    Task<ChatParticipantResolveResultDto?> ResolveChatParticipant(ChatParticipantResolveRequestDto request);
 }
