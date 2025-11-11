@@ -13,9 +13,12 @@ public class LightlessAuth
     public const string OAuth_GetUIDs = "getUIDs";
     public const string OAuth_GetDiscordOAuthToken = "getDiscordOAuthToken";
     public const string User = "/user";
+    public const string Group = "/group";
     public const string User_Unban_Discord = "unbanDiscord";
     public const string User_Unban_Uid = "unbanUID";
     public const string Ban_Uid = "ban";
+    public const string Disable_Profile = "disableProfile";
+    public const string Enable_Profile = "enableProfile";
     public static Uri AuthFullPath(Uri baseUri) => new Uri(baseUri, Auth + "/" + Auth_CreateIdent);
     public static Uri AuthWithOauthFullPath(Uri baseUri) => new Uri(baseUri, OAuth + "/" + OAuth_CreateOAuth);
     public static Uri RenewTokenFullPath(Uri baseUri) => new Uri(baseUri, Auth + "/" + Auth_RenewToken);
