@@ -68,6 +68,8 @@ public interface ILightlessHub
     Task<GroupProfileDto> GroupGetProfile(GroupDto dto);
     Task GroupSetProfile(GroupProfileDto dto);
     Task GroupSetUserInfo(GroupPairUserInfoDto groupPair);
+    Task<GroupPruneSettingsDto?> GroupGetPruneSettings(GroupDto dto);
+    Task GroupSetPruneSettings(GroupPruneSettingsDto dto);
     Task<List<GroupFullInfoDto>> GroupsGetAll();
     Task GroupUnbanUser(GroupPairDto groupPair);
     Task<int> GroupPrune(GroupDto group, int days, bool execute);
