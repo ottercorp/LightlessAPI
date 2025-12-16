@@ -61,15 +61,10 @@ public readonly record struct ChatReportSubmitDto(
     string? AdditionalContext);
 
 [MessagePackObject(keyAsPropertyName: true)]
-public readonly record struct ChatParticipantResolveRequestDto(
+public readonly record struct ChatParticipantMuteRequestDto(
     ChatChannelDescriptor Channel,
-    string Token);
-
-[MessagePackObject(keyAsPropertyName: true)]
-public readonly record struct ChatParticipantResolveResultDto(
-    ChatChannelDescriptor Channel,
-    ChatSenderDescriptor Sender,
-    UserProfileDto? Profile);
+    string Token,
+    bool Mute);
 
 [MessagePackObject(keyAsPropertyName: true)]
 public readonly record struct ZoneChatChannelInfoDto(

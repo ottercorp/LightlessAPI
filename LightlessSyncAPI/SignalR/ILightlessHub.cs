@@ -114,5 +114,5 @@ public interface ILightlessHub
     Task UpdateChatPresence(ChatPresenceUpdateDto presence);
     Task SendChatMessage(ChatSendRequestDto request);
     Task ReportChatMessage(ChatReportSubmitDto request);
-    Task<ChatParticipantResolveResultDto?> ResolveChatParticipant(ChatParticipantResolveRequestDto request);
+    Task SetChatParticipantMute(ChatParticipantMuteRequestDto request);
 }
