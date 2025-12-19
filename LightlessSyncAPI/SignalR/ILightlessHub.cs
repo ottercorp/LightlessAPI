@@ -10,7 +10,7 @@ namespace LightlessSync.API.SignalR;
 
 public interface ILightlessHub
 {
-    const int ApiVersion = 34;
+    const int ApiVersion = 35;
     const string Path = "/lightless";
 
     Task<bool> CheckClientHealth();
