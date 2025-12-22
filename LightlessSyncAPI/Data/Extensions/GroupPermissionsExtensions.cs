@@ -24,6 +24,11 @@ public static class GroupPermissionsExtensions
         return perm.HasFlag(GroupPermissions.PreferDisableVFX);
     }
 
+    public static bool IsDisableChat(this GroupPermissions perm)
+    {
+        return perm.HasFlag(GroupPermissions.DisableChat);
+    }
+
     public static void SetDisableInvites(this ref GroupPermissions perm, bool set)
     {
         if (set) perm |= GroupPermissions.DisableInvites;
@@ -46,5 +51,11 @@ public static class GroupPermissionsExtensions
     {
         if (set) perm |= GroupPermissions.PreferDisableVFX;
         else perm &= ~GroupPermissions.PreferDisableVFX;
+    }
+
+    public static void SetDisableChat(this ref GroupPermissions perm, bool set)
+    {
+        if (set) perm |= GroupPermissions.DisableChat;
+        else perm &= ~GroupPermissions.DisableChat;
     }
 }
