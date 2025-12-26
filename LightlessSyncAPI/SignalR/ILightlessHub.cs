@@ -115,4 +115,6 @@ public interface ILightlessHub
     Task SendChatMessage(ChatSendRequestDto request);
     Task ReportChatMessage(ChatReportSubmitDto request);
     Task SetChatParticipantMute(ChatParticipantMuteRequestDto request);
+    
+    Task Client_UpdateSupporterList(SupporterDto supporterDto);
 }
