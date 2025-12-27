@@ -59,6 +59,7 @@ public record struct LocationInfo
     [Key(4)] public uint WardId { get; set; }
     [Key(5)] public uint HouseId { get; set; }
     [Key(6)] public uint RoomId { get; set; }
+    [Key(7)] public uint InstanceId { get; set; }
 }
 
 [MessagePackObject]
