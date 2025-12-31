@@ -28,10 +28,6 @@ public static class UserPermissionsExtensions
     {
         return perm.HasFlag(UserPermissions.Sticky);
     }
-    public static bool IsSharingLocation(this UserPermissions perm)
-    {
-        return perm.HasFlag(UserPermissions.ShareLocation);
-    }
 
     public static void SetDisableAnimations(this ref UserPermissions perm, bool set)
     {
@@ -61,11 +57,5 @@ public static class UserPermissionsExtensions
     {
         if (sticky) perm |= UserPermissions.Sticky;
         else perm &= ~UserPermissions.Sticky;
-    }
-    
-    public static void SetShareLocation(this ref UserPermissions perm, bool? set)
-    {
-        if (set == true) perm |= UserPermissions.ShareLocation;
-        else perm &= ~UserPermissions.ShareLocation;
     }
 }

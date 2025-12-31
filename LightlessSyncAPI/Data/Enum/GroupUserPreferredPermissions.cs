@@ -8,5 +8,4 @@ public enum GroupUserPreferredPermissions
     DisableAnimations = 0x2,
     DisableSounds = 0x4,
     DisableVFX = 0x8,
-    ShareLocation = 0x10,
 }

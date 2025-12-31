@@ -58,5 +58,5 @@ public interface ILightlessHubClient : ILightlessHub
     void OnGposeLobbyPushCharacterData(Action<CharaDataDownloadDto> act);
     void OnGposeLobbyPushPoseData(Action<UserData, PoseData> act);
     void OnGposeLobbyPushWorldData(Action<UserData, WorldData> act);
-    void OnReciveLocation(Action<LocationDto> act);
+    void OnReceiveLocation(Action<LocationDto, DateTimeOffset> act);
 }

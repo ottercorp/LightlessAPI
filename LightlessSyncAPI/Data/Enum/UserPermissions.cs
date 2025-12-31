@@ -9,5 +9,4 @@ public enum UserPermissions
     DisableSounds = 4,
     DisableVFX = 8,
     Sticky = 16,
-    ShareLocation = 32
 }
