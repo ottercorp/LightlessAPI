@@ -60,4 +60,5 @@ public interface ILightlessHubClient : ILightlessHub
     void OnGposeLobbyPushWorldData(Action<UserData, WorldData> act);
     
     void OnSupporterUpdate(Action<SupporterDto> act);
+    void OnReceiveLocation(Action<LocationDto, DateTimeOffset> act);
 }
