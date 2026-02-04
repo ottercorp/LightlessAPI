@@ -25,6 +25,7 @@ public class LightlessFiles
 
     public const string Main = "/main";
     public const string Main_SendReady = "sendReady";
+    public const string Main_ShardFiles = "shardFiles";
 
     public const string Speedtest = "/speedtest";
     public const string Speedtest_Run = "run";
@@ -46,4 +47,5 @@ public class LightlessFiles
     public static Uri DistributionGetFullPath(Uri baseUri, string hash) => new(baseUri, Distribution + "/" + Distribution_Get + "?file=" + hash);
     public static Uri SpeedtestRunFullPath(Uri baseUri) => new(baseUri, Speedtest + "/" + Speedtest_Run);
     public static Uri MainSendReadyFullPath(Uri baseUri, string uid, Guid request) => new(baseUri, Main + "/" + Main_SendReady + "/" + "?uid=" + uid + "&requestId=" + request.ToString());
+    public static Uri MainShardFilesFullPath(Uri baseUri) => new(baseUri, Main + "/" + Main_ShardFiles);
 }
