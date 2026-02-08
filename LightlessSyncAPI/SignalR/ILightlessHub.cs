@@ -92,8 +92,8 @@ public interface ILightlessHub
     Task<UserProfileDto> UserGetProfile(UserDto dto);
     Task<UserProfileDto?> UserGetLightfinderProfile(string hashedCid);
     Task<IReadOnlyList<UserBlacklistDto>> UserGetBlacklistedUsers();
-    Task UserBlock(string targetUid);
-    Task UserUnblock(string targetUid);
+    Task UserBlacklist(string targetUid);
+    Task UserUnblacklist(string targetUid);
     Task UserPushData(UserCharaDataMessageDto dto);
     Task UserUpdateVanityColors(UserVanityColorsDto dto);
     Task UserRemovePair(UserDto userDto);
