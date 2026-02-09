@@ -74,6 +74,7 @@ public interface ILightlessHub
     Task<List<GroupFullInfoDto>> GroupsGetAll();
     Task GroupUnbanUser(GroupPairDto groupPair);
     Task<int> GroupPrune(GroupDto group, int days, bool execute);
+   
 
     Task UserAddPair(UserDto user);
     Task TryPairWithContentId(string otherCid);
@@ -90,6 +91,9 @@ public interface ILightlessHub
     Task<List<UserFullPairDto>> UserGetPairedClients();
     Task<UserProfileDto> UserGetProfile(UserDto dto);
     Task<UserProfileDto?> UserGetLightfinderProfile(string hashedCid);
+    Task<IReadOnlyList<UserBlacklistDto>> UserGetBlacklistedUsers();
+    Task UserBlacklist(string targetUid);
+    Task UserUnblacklist(string targetUid);
     Task UserPushData(UserCharaDataMessageDto dto);
     Task UserUpdateVanityColors(UserVanityColorsDto dto);
     Task UserRemovePair(UserDto userDto);
