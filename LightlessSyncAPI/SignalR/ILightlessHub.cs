@@ -29,6 +29,9 @@ public interface ILightlessHub
     Task Client_UpdateSystemInfo(SystemInfoDto systemInfo);
     Task Client_UserAddClientPair(UserPairDto dto);
     Task Client_UserReceiveCharacterData(OnlineUserCharaDataDto dataDto);
+    Task Client_PairReceiveVisualSingle(PairInboundDto<PairVisualDeltaDto> dataDto);
+    Task Client_PairReceiveVisualDelta(PairInboundDto<PairVisualDeltaDto> dataDto);
+    Task Client_PairReceiveModDelta(OnlineUserModDataDto dataDto);
     Task Client_UserReceiveUploadStatus(UserDto dto);
     Task Client_UserRemoveClientPair(UserDto dto);
     Task Client_UserSendOffline(UserDto dto);
@@ -94,6 +97,10 @@ public interface ILightlessHub
     Task<IReadOnlyList<UserBlacklistDto>> UserGetBlacklistedUsers();
     Task UserBlacklist(string targetUid);
     Task UserUnblacklist(string targetUid);
+    Task PairPushVisualSingle(PairOutboundDto<PairVisualDeltaDto> dto);
+    Task PairPushVisualDelta(PairOutboundDto<PairVisualDeltaDto> dto);
+    Task PairPushModDelta(UserModDataMessageDto dto);
+
     Task UserPushData(UserCharaDataMessageDto dto);
     Task UserUpdateVanityColors(UserVanityColorsDto dto);
     Task UserRemovePair(UserDto userDto);
