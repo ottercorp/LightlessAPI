@@ -131,5 +131,5 @@ public interface ILightlessHub
     Task UpdateLocation(LocationDto locationDto, bool offline);
     Task<(List<LocationWithTimeDto>, List<SharingStatusDto>)> RequestAllLocationInfo();
     Task<bool> ToggleLocationSharing(LocationSharingToggleDto dto);
-    
+    Task<List<GroupUserDto>> GroupGetUsers(GroupDto dto);
 }
