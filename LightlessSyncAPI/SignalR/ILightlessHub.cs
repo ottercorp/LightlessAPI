@@ -50,6 +50,7 @@ public interface ILightlessHub
     Task Client_GposeLobbyPushWorldData(UserData userData, WorldData worldData);
     Task Client_ChatReceive(ChatMessageDto message);
     Task Client_SendLocationToClient(LocationDto locationDto, DateTimeOffset expireAt);
+    Task Client_ApplyMoodles(UserData source, string data);
 
     Task<ConnectionDto> GetConnectionDto();
     Task<IReadOnlyList<ZoneChatChannelInfoDto>> GetZoneChatChannels();
@@ -134,4 +135,5 @@ public interface ILightlessHub
     Task<(List<LocationWithTimeDto>, List<SharingStatusDto>)> RequestAllLocationInfo();
     Task<bool> ToggleLocationSharing(LocationSharingToggleDto dto);
     Task<List<GroupUserDto>> GroupGetUsers(GroupDto dto);
+    Task ApplyMoodles(UserData target, string data);
 }
