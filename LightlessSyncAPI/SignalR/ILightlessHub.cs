@@ -36,6 +36,7 @@ public interface ILightlessHub
     Task Client_UserRemoveClientPair(UserDto dto);
     Task Client_UserSendOffline(UserDto dto);
     Task Client_UserSendOnline(OnlineUserIdentDto dto);
+    Task Client_UserUpdateDecoration(UserDecorationDto dto);
     Task Client_UserUpdateOtherPairPermissions(UserPermissionsDto dto);
     Task Client_UpdateUserIndividualPairStatusDto(UserIndividualPairStatusDto dto);
     Task Client_UserUpdateProfile(UserDto dto);

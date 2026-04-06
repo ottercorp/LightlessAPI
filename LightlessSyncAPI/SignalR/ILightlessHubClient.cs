@@ -43,6 +43,8 @@ public interface ILightlessHubClient : ILightlessHub
 
     void OnUserSendOnline(Action<OnlineUserIdentDto> act);
 
+    void OnUserUpdateDecoration(Action<UserDecorationDto> act);
+
     void OnUserUpdateOtherPairPermissions(Action<UserPermissionsDto> act);
 
     void OnUserUpdateProfile(Action<UserDto> act);
