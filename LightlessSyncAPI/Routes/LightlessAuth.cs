@@ -4,6 +4,7 @@ public class LightlessAuth
 {
     public const string OAuth = "/oauth";
     public const string Auth = "/auth";
+    public const string XIVAuth = "/xivauth";
     public const string Auth_CreateIdent = "createWithIdent";
     public const string Auth_RenewToken = "renewToken";
     public const string OAuth_GetUIDsBasedOnSecretKeys = "getUIDsViaSecretKey";
@@ -12,6 +13,8 @@ public class LightlessAuth
     public const string OAuth_GetDiscordOAuthEndpoint = "getDiscordOAuthEndpoint";
     public const string OAuth_GetUIDs = "getUIDs";
     public const string OAuth_GetDiscordOAuthToken = "getDiscordOAuthToken";
+    public const string XIVAuth_GetEndpoint = "plugin/endpoint";
+    public const string XIVAuth_GetToken = "plugin/token";
     public const string User = "/user";
     public const string Group = "/group";
     public const string User_Unban_Discord = "unbanDiscord";
@@ -27,4 +30,6 @@ public class LightlessAuth
     public static Uri GetDiscordOAuthEndpointFullPath(Uri baseUri) => new Uri(baseUri, OAuth + "/" + OAuth_GetDiscordOAuthEndpoint);
     public static Uri GetDiscordOAuthTokenFullPath(Uri baseUri, string sessionId) => new Uri(baseUri, OAuth + "/" + OAuth_GetDiscordOAuthToken + "?sessionId=" + sessionId);
     public static Uri GetUIDsFullPath(Uri baseUri) => new Uri(baseUri, OAuth + "/" + OAuth_GetUIDs);
+    public static Uri GetXIVAuthEndpointFullPath(Uri baseUri) => new Uri(baseUri, XIVAuth + "/" + XIVAuth_GetEndpoint);
+    public static Uri GetXIVAuthTokenFullPath(Uri baseUri, string sessionId) => new Uri(baseUri, XIVAuth + "/" + XIVAuth_GetToken + "?sessionId=" + sessionId);
 }
