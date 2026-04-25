@@ -14,4 +14,8 @@ public record GroupProfileDto(
     ProfileColorsDto? Colors = null,
     ProfileHousingDto? Housing = null,
     ProfileWorldDto? World = null,
-    ProfileTimeDto? Time = null) : GroupDto(Group);
+    ProfileTimeDto? Time = null,
+    string? PictureUrl = null,
+    string? BannerUrl = null,
+    string? PictureETag = null,
+    string? BannerETag = null) : GroupDto(Group);
