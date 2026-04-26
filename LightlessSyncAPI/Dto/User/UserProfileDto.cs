@@ -16,4 +16,8 @@ public record UserProfileDto(
     ProfileColorsDto? Colors = null,
     ProfileHousingDto? Housing = null,
     ProfileWorldDto? World = null,
-    ProfileTimeDto? Time = null) : UserDto(User);
+    ProfileTimeDto? Time = null,
+    string? ProfilePictureUrl = null,
+    string? BannerPictureUrl = null,
+    string? ProfilePictureETag = null,
+    string? BannerPictureETag = null) : UserDto(User);

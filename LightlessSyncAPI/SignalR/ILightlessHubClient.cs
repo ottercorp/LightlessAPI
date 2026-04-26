@@ -32,7 +32,9 @@ public interface ILightlessHubClient : ILightlessHub
     void OnUserAddClientPair(Action<UserPairDto> act);
 
     void OnUserReceiveCharacterData(Action<OnlineUserCharaDataDto> act);
-
+    void OnPairReceiveVisualSingle(Action<PairInboundDto<PairVisualDeltaDto>> act);
+    void OnPairReceiveVisualDelta(Action<PairInboundDto<PairVisualDeltaDto>> act);
+    void OnPairReceiveModDelta(Action<OnlineUserModDataDto> act);
     void OnUserReceiveUploadStatus(Action<UserDto> act);
 
     void OnUserRemoveClientPair(Action<UserDto> act);
@@ -40,6 +42,8 @@ public interface ILightlessHubClient : ILightlessHub
     void OnUserSendOffline(Action<UserDto> act);
 
     void OnUserSendOnline(Action<OnlineUserIdentDto> act);
+
+    void OnUserUpdateDecoration(Action<UserDecorationDto> act);
 
     void OnUserUpdateOtherPairPermissions(Action<UserPermissionsDto> act);
 
@@ -59,4 +63,5 @@ public interface ILightlessHubClient : ILightlessHub
     void OnGposeLobbyPushPoseData(Action<UserData, PoseData> act);
     void OnGposeLobbyPushWorldData(Action<UserData, WorldData> act);
     void OnReceiveLocation(Action<LocationDto, DateTimeOffset> act);
+    void OnApplyMoodles(Action<UserData, string> act);
 }
