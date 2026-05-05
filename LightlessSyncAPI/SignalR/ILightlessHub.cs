@@ -10,7 +10,7 @@ namespace LightlessSync.API.SignalR;
 
 public interface ILightlessHub
 {
-    const int ApiVersion = 35;
+    const int ApiVersion = 36;
     const string Path = "/lightless";
 
     Task<bool> CheckClientHealth();
@@ -29,10 +29,14 @@ public interface ILightlessHub
     Task Client_UpdateSystemInfo(SystemInfoDto systemInfo);
     Task Client_UserAddClientPair(UserPairDto dto);
     Task Client_UserReceiveCharacterData(OnlineUserCharaDataDto dataDto);
+    Task Client_PairReceiveVisualSingle(PairInboundDto<PairVisualDeltaDto> dataDto);
+    Task Client_PairReceiveVisualDelta(PairInboundDto<PairVisualDeltaDto> dataDto);
+    Task Client_PairReceiveModDelta(OnlineUserModDataDto dataDto);
     Task Client_UserReceiveUploadStatus(UserDto dto);
     Task Client_UserRemoveClientPair(UserDto dto);
     Task Client_UserSendOffline(UserDto dto);
     Task Client_UserSendOnline(OnlineUserIdentDto dto);
+    Task Client_UserUpdateDecoration(UserDecorationDto dto);
     Task Client_UserUpdateOtherPairPermissions(UserPermissionsDto dto);
     Task Client_UpdateUserIndividualPairStatusDto(UserIndividualPairStatusDto dto);
     Task Client_UserUpdateProfile(UserDto dto);
@@ -46,6 +50,7 @@ public interface ILightlessHub
     Task Client_GposeLobbyPushWorldData(UserData userData, WorldData worldData);
     Task Client_ChatReceive(ChatMessageDto message);
     Task Client_SendLocationToClient(LocationDto locationDto, DateTimeOffset expireAt);
+    Task Client_ApplyMoodles(UserData source, string data);
 
     Task<ConnectionDto> GetConnectionDto();
     Task<IReadOnlyList<ZoneChatChannelInfoDto>> GetZoneChatChannels();
@@ -92,8 +97,13 @@ public interface ILightlessHub
     Task<UserProfileDto> UserGetProfile(UserDto dto);
     Task<UserProfileDto?> UserGetLightfinderProfile(string hashedCid);
     Task<IReadOnlyList<UserBlacklistDto>> UserGetBlacklistedUsers();
+    Task TryUserBlacklistByHashedCid(string targetHashedCid);
     Task UserBlacklist(string targetUid);
     Task UserUnblacklist(string targetUid);
+    Task PairPushVisualSingle(PairOutboundDto<PairVisualDeltaDto> dto);
+    Task PairPushVisualDelta(PairOutboundDto<PairVisualDeltaDto> dto);
+    Task PairPushModDelta(UserModDataMessageDto dto);
+
     Task UserPushData(UserCharaDataMessageDto dto);
     Task UserUpdateVanityColors(UserVanityColorsDto dto);
     Task UserRemovePair(UserDto userDto);
@@ -126,4 +136,5 @@ public interface ILightlessHub
     Task<(List<LocationWithTimeDto>, List<SharingStatusDto>)> RequestAllLocationInfo();
     Task<bool> ToggleLocationSharing(LocationSharingToggleDto dto);
     Task<List<GroupUserDto>> GroupGetUsers(GroupDto dto);
+    Task ApplyMoodles(UserData target, string data);
 }
