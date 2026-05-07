@@ -119,6 +119,8 @@ public interface ILightlessHub
     Task<List<CharaDataFullDto>> CharaDataGetOwn();
     Task<List<CharaDataMetaInfoDto>> CharaDataGetShared();
     Task<CharaDataFullDto?> CharaDataAttemptRestore(string id);
+    Task<VenueDto> GetVenue();
+    Task<bool> UpdateVenue(VenueData venue, bool delete = false);
 
     Task<string> GposeLobbyCreate();
     Task<List<UserData>> GposeLobbyJoin(string lobbyId);
@@ -137,4 +139,5 @@ public interface ILightlessHub
     Task<bool> ToggleLocationSharing(LocationSharingToggleDto dto);
     Task<List<GroupUserDto>> GroupGetUsers(GroupDto dto);
     Task ApplyMoodles(UserData target, string data);
+    
 }
