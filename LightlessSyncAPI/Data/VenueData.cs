@@ -8,7 +8,7 @@ public record VenueData(
     Guid Id,
     string Title,
     string? Description,
-    string UserID,
+    UserData user,
     DateTime UpdatedAt,
     DateTime StartAt,
     DateTime EndAt,
