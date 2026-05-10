@@ -11,6 +11,7 @@ public record PostingLocationDto
     public uint TerritoryId { get; init; }
     public uint MapId { get; init; }
     public uint Division { get; init; }
+    public uint InstanceId { get; init; }
     public uint PlotId { get; init; }
     public uint HouseId { get; init; }
     public uint RoomId { get; init; }
