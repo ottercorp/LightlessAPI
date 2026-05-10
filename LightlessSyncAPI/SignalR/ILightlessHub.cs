@@ -3,6 +3,7 @@ using LightlessSync.API.Data.Enum;
 using LightlessSync.API.Dto;
 using LightlessSync.API.Dto.Chat;
 using LightlessSync.API.Dto.CharaData;
+using LightlessSync.API.Dto.CommunityBoard;
 using LightlessSync.API.Dto.Group;
 using LightlessSync.API.Dto.User;
 
@@ -139,5 +140,11 @@ public interface ILightlessHub
     Task<bool> ToggleLocationSharing(LocationSharingToggleDto dto);
     Task<List<GroupUserDto>> GroupGetUsers(GroupDto dto);
     Task ApplyMoodles(UserData target, string data);
-    
+
+    Task<List<PostingDto>> CommunityBoardGetPostings();
+    Task<PostingDto?> CommunityBoardCreatePosting(PostingCreateRequest request);
+    Task CommunityBoardDeletePosting(Guid postingGuid);
+
+    Task Client_CommunityBoardPostingCreated(PostingDto posting);
+    Task Client_CommunityBoardPostingDeleted(Guid postingGuid);
 }
