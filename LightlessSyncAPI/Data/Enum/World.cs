@@ -146,7 +146,7 @@ public enum World
     RouFengHaiWan = 1178,
     HuPoYuan = 1179,
 
-    // China - MoGuLi (莫古力)
+    // China - MoGuLi
     BaiYinXiang = 1172,
     BaiJinHuanXiang = 1076,
     ShenQuanHen = 1171,
