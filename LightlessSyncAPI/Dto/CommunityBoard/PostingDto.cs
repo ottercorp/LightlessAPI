@@ -36,6 +36,7 @@ public record PostingDto
     public bool Open { get; init; }
     public bool HasTempGroup { get; init; }
     public string? TempGroupPW { get; init; }
+    public bool GroupHasPassword { get; init; }
     public string? UserUID { get; init; }
     public string? GroupGID { get; init; }
     public PostingLocationDto? Location { get; init; }
