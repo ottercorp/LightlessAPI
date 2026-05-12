@@ -39,6 +39,8 @@ public record PostingDto
     public string? UserUID { get; init; }
     public string? GroupGID { get; init; }
     public PostingLocationDto? Location { get; init; }
+    public string? ImageUrl { get; init; }
+    public string? ImageETag { get; init; }
 }
 
 [MessagePackObject(keyAsPropertyName: true)]
@@ -54,5 +56,7 @@ public record PostingCreateRequest
     public bool Open { get; init; }
     public bool HasTempGroup { get; init; }
     public string? TempGroupPW { get; init; }
+    public string? GroupGID { get; init; }
+    public string? ImageBase64 { get; init; }
     public PostingLocationDto? Location { get; init; }
 }
