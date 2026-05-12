@@ -60,3 +60,19 @@ public record PostingCreateRequest
     public string? ImageBase64 { get; init; }
     public PostingLocationDto? Location { get; init; }
 }
+
+[MessagePackObject(keyAsPropertyName: true)]
+public record PostingEditRequest
+{
+    public Guid Guid { get; init; }
+    public DateTimeOffset StartTime { get; init; }
+    public DateTimeOffset EndTime { get; init; }
+    public string Title { get; init; } = string.Empty;
+    public string Description { get; init; } = string.Empty;
+    public int[] Tags { get; init; } = [];
+    public bool IsNSFW { get; init; }
+    public bool Open { get; init; }
+    public string? TempGroupPW { get; init; }
+    public string? ImageBase64 { get; init; }
+    public PostingLocationDto? Location { get; init; }
+}

@@ -140,6 +140,7 @@ public interface ILightlessHub
 
     Task<List<PostingDto>> CommunityBoardGetPostings(World callerWorld);
     Task<PostingDto?> CommunityBoardCreatePosting(PostingCreateRequest request);
+    Task<PostingDto?> CommunityBoardEditPosting(PostingEditRequest request);
     Task CommunityBoardDeletePosting(Guid postingGuid);
 
 }
