@@ -1,3 +1,4 @@
+using LightlessSync.API.Data.Enum;
 using MessagePack;
 
 namespace LightlessSync.API.Dto.CommunityBoard;
@@ -10,6 +11,7 @@ public record PostingLocationDto
     public uint TerritoryId { get; init; }
     public uint MapId { get; init; }
     public uint Division { get; init; }
+    public uint InstanceId { get; init; }
     public uint PlotId { get; init; }
     public uint HouseId { get; init; }
     public uint RoomId { get; init; }
@@ -29,6 +31,7 @@ public record PostingDto
     public string Title { get; init; } = string.Empty;
     public string Description { get; init; } = string.Empty;
     public int[] Tags { get; init; } = [];
+    public World ServerId { get; init; }
     public bool IsNSFW { get; init; }
     public bool Open { get; init; }
     public bool HasTempGroup { get; init; }
@@ -46,6 +49,7 @@ public record PostingCreateRequest
     public string Title { get; init; } = string.Empty;
     public string Description { get; init; } = string.Empty;
     public int[] Tags { get; init; } = [];
+    public World ServerId { get; init; }
     public bool IsNSFW { get; init; }
     public bool Open { get; init; }
     public bool HasTempGroup { get; init; }

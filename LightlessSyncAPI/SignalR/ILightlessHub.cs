@@ -139,10 +139,8 @@ public interface ILightlessHub
     Task<List<GroupUserDto>> GroupGetUsers(GroupDto dto);
     Task ApplyMoodles(UserData target, string data);
 
-    Task<List<PostingDto>> CommunityBoardGetPostings();
+    Task<List<PostingDto>> CommunityBoardGetPostings(World callerWorld);
     Task<PostingDto?> CommunityBoardCreatePosting(PostingCreateRequest request);
     Task CommunityBoardDeletePosting(Guid postingGuid);
 
-    Task Client_CommunityBoardPostingCreated(PostingDto posting);
-    Task Client_CommunityBoardPostingDeleted(Guid postingGuid);
 }
