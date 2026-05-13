@@ -42,6 +42,8 @@ public record PostingDto
     public PostingLocationDto? Location { get; init; }
     public string? ImageUrl { get; init; }
     public string? ImageETag { get; init; }
+    public string? BannerImageUrl { get; init; }
+    public string? BannerImageETag { get; init; }
 }
 
 [MessagePackObject(keyAsPropertyName: true)]
@@ -59,6 +61,7 @@ public record PostingCreateRequest
     public string? TempGroupPW { get; init; }
     public string? GroupGID { get; init; }
     public string? ImageBase64 { get; init; }
+    public string? BannerImageBase64 { get; init; }
     public PostingLocationDto? Location { get; init; }
 }
 
@@ -75,5 +78,6 @@ public record PostingEditRequest
     public bool Open { get; init; }
     public string? TempGroupPW { get; init; }
     public string? ImageBase64 { get; init; }
+    public string? BannerImageBase64 { get; init; }
     public PostingLocationDto? Location { get; init; }
 }
