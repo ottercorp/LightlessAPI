@@ -14,6 +14,7 @@ public record PostingLocationDto
     public uint InstanceId { get; init; }
     public uint PlotId { get; init; }
     public uint HouseId { get; init; }
+    public uint WardId { get; init; }
     public uint RoomId { get; init; }
     public bool IsSubDivision { get; init; }
     public bool IsHouseLocked { get; init; }
