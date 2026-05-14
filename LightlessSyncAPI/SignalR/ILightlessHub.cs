@@ -132,7 +132,6 @@ public interface ILightlessHub
     Task ReportChatMessage(ChatReportSubmitDto request);
     Task SetChatParticipantMute(ChatParticipantMuteRequestDto request);
     
-    Task Client_UpdateSupporterList(SupporterDto supporterDto);
     Task UpdateLocation(LocationDto locationDto, bool offline);
     Task<(List<LocationWithTimeDto>, List<SharingStatusDto>)> RequestAllLocationInfo();
     Task<bool> ToggleLocationSharing(LocationSharingToggleDto dto);
