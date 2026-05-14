@@ -77,6 +77,8 @@ public record PostingEditRequest
     public int[] Tags { get; init; } = [];
     public bool IsNSFW { get; init; }
     public bool Open { get; init; }
+    public bool HasTempGroup { get; init; }
+    public string? GroupGID { get; init; }
     public string? TempGroupPW { get; init; }
     public string? ImageBase64 { get; init; }
     public string? BannerImageBase64 { get; init; }
