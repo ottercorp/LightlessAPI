@@ -65,4 +65,5 @@ public interface ILightlessHubClient : ILightlessHub
     
     void OnReceiveLocation(Action<LocationDto, DateTimeOffset> act);
     void OnApplyMoodles(Action<UserData, string> act);
+    void OnMoodlesShare(Action<MoodlesDto> act);
 }

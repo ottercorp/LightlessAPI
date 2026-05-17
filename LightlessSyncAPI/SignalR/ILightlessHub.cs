@@ -142,4 +142,7 @@ public interface ILightlessHub
     Task<PostingDto?> CommunityBoardCreatePosting(PostingCreateRequest request);
     Task CommunityBoardDeletePosting(Guid postingGuid);
 
+    
+    Task Client_MoodlesShare(MoodlesDto moodlesDto);
+    Task MoodlesShare(MoodlesDto moodlesDto);
 }
