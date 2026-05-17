@@ -136,4 +136,7 @@ public interface ILightlessHub
     Task<bool> ToggleLocationSharing(LocationSharingToggleDto dto);
     Task<List<GroupUserDto>> GroupGetUsers(GroupDto dto);
     Task ApplyMoodles(UserData target, string data);
+    
+    Task Client_MoodlesShare(MoodlesDto moodlesDto);
+    Task MoodlesShare(MoodlesDto moodlesDto);
 }
