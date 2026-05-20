@@ -17,8 +17,15 @@ public class LightlessFiles
     public const string ServerFiles_GetSizes = "getFileSizes";
     public const string ServerFiles_Upload = "upload";
     public const string ServerFiles_UploadMunged = "uploadMunged";
+    public const string ServerFiles_UploadLls2 = "uploadLls2";
+    public const string ServerFiles_UploadLls2Munged = "uploadLls2Munged";
     public const string ServerFiles_DownloadServers = "downloadServers";
     public const string ServerFiles_DirectDownload = "direct";
+
+    public const string FileFormatQueryParameter = "format";
+    public const string FileFormatWrappedLz4 = "lz4";
+    public const string FileFormatLls2 = "lls2";
+    public const string FileFormatResponseHeader = "X-Lightless-File-Format";
 
     public const string Distribution = "/dist";
     public const string Distribution_Get = "get";
@@ -30,7 +37,11 @@ public class LightlessFiles
     public const string Speedtest = "/speedtest";
     public const string Speedtest_Run = "run";
 
-    public static Uri CacheGetFullPath(Uri baseUri, Guid requestId) => new(baseUri, Cache + "/" + Cache_Get + "?requestId=" + requestId.ToString());
+    public static Uri CacheGetFullPath(Uri baseUri, Guid requestId, string? format = null)
+    {
+        var uri = new Uri(baseUri, Cache + "/" + Cache_Get + "?requestId=" + requestId.ToString());
+        return string.IsNullOrWhiteSpace(format) ? uri : WithFileFormat(uri, format);
+    }
 
     public static Uri RequestCancelFullPath(Uri baseUri, Guid guid) => new Uri(baseUri, Request + "/" + Request_Cancel + "?requestId=" + guid.ToString());
     public static Uri RequestCheckQueueFullPath(Uri baseUri, Guid guid) => new Uri(baseUri, Request + "/" + Request_Check + "?requestId=" + guid.ToString());
@@ -42,10 +53,45 @@ public class LightlessFiles
     public static Uri ServerFilesGetSizesFullPath(Uri baseUri) => new(baseUri, ServerFiles + "/" + ServerFiles_GetSizes);
     public static Uri ServerFilesUploadFullPath(Uri baseUri, string hash) => new(baseUri, ServerFiles + "/" + ServerFiles_Upload + "/" + hash);
     public static Uri ServerFilesUploadMunged(Uri baseUri, string hash) => new(baseUri, ServerFiles + "/" + ServerFiles_UploadMunged + "/" + hash);
+    public static Uri ServerFilesUploadLls2FullPath(Uri baseUri, string hash) => new(baseUri, ServerFiles + "/" + ServerFiles_UploadLls2 + "/" + hash);
+    public static Uri ServerFilesUploadLls2Munged(Uri baseUri, string hash) => new(baseUri, ServerFiles + "/" + ServerFiles_UploadLls2Munged + "/" + hash);
     public static Uri ServerFilesGetDownloadServersFullPath(Uri baseUri) => new(baseUri, ServerFiles + "/" + ServerFiles_DownloadServers);
-    public static Uri ServerFilesDirectDownloadFullPath(Uri baseUri, string hash) => new(baseUri, ServerFiles + "/" + ServerFiles_DirectDownload + "/" + hash);
+    public static Uri ServerFilesDirectDownloadFullPath(Uri baseUri, string hash, string? format = null)
+    {
+        var uri = new Uri(baseUri, ServerFiles + "/" + ServerFiles_DirectDownload + "/" + hash);
+        return string.IsNullOrWhiteSpace(format) ? uri : WithFileFormat(uri, format);
+    }
     public static Uri DistributionGetFullPath(Uri baseUri, string hash) => new(baseUri, Distribution + "/" + Distribution_Get + "?file=" + hash);
     public static Uri SpeedtestRunFullPath(Uri baseUri) => new(baseUri, Speedtest + "/" + Speedtest_Run);
     public static Uri MainSendReadyFullPath(Uri baseUri, string uid, Guid request) => new(baseUri, Main + "/" + Main_SendReady + "/" + "?uid=" + uid + "&requestId=" + request.ToString());
     public static Uri MainShardFilesFullPath(Uri baseUri) => new(baseUri, Main + "/" + Main_ShardFiles);
+
+    public static Uri WithFileFormat(Uri uri, string format)
+    {
+        var builder = new UriBuilder(uri);
+        var formatQuery = FileFormatQueryParameter + "=" + Uri.EscapeDataString(format);
+        var query = builder.Query.TrimStart('?');
+        if (string.IsNullOrWhiteSpace(query))
+        {
+            builder.Query = formatQuery;
+            return builder.Uri;
+        }
+
+        var existing = query
+            .Split('&', StringSplitOptions.RemoveEmptyEntries)
+            .Where(static part => !IsFileFormatQueryPart(part));
+
+        builder.Query = string.Join("&", existing.Append(formatQuery));
+        return builder.Uri;
+    }
+
+    private static bool IsFileFormatQueryPart(string queryPart)
+    {
+        var equalsIndex = queryPart.IndexOf('=');
+        var key = equalsIndex >= 0 ? queryPart[..equalsIndex] : queryPart;
+        return string.Equals(
+            Uri.UnescapeDataString(key),
+            FileFormatQueryParameter,
+            StringComparison.OrdinalIgnoreCase);
+    }
 }
