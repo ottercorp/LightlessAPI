@@ -22,10 +22,10 @@ public enum Datacenter
     Mana,
     Meteor,
     Materia,
-    MaoXiaoPang,
-    MoGuLi,
-    DouDouChai,
-    LuXingNiao,
+    陆行鸟,
+    莫古力,
+    猫小胖,
+    豆豆柴,
 }
 
 public enum World
@@ -136,42 +136,43 @@ public enum World
     Sephirot = 86,
     Sophia = 87,
     Zurvan = 88,
-
-    // China - MaoXiaoPang
-    ZiShuiZhanQiao = 1043,
-    YanXia = 1169,
-    JingYuZhuangYuan = 1106,
-    MoDuNa = 1045,
-    HaiMaoChaWu = 1177,
-    RouFengHaiWan = 1178,
-    HuPoYuan = 1179,
-
-    // China - MoGuLi
-    BaiYinXiang = 1172,
-    BaiJinHuanXiang = 1076,
-    ShenQuanHen = 1171,
-    ChaoFengTing = 1170,
-    LvRenZhanQiao = 1113,
-    FuXiaoZhiJian = 1121,
-    Longchaoshendian = 1166,
-    MengYuBaoJing = 1176,
-
-    // China - DouDouChai
-    ShuiJingTa2 = 1192,
-    YinLeiHu2 = 1183,
-    TaiYangHaiAn2 = 1180,
-    YiXiuJiaDe2 = 1186,
-    HongChaChuan2 = 1201,
-
+    
     // China - LuXingNiao
-    HongYuHai = 1167,
-    ShenYiZhiDi = 1081,
-    LaNuoXiYa = 1042,
-    HuanYingQunDao = 1044,
-    MengYaChi = 1060,
-    YuZhouHeYin = 1173,
-    WoXianXiRan = 1174,
-    ChenXiWangZuo = 1175,
+    拉诺西亚 = 1042,
+    幻影群岛 = 1044,
+    神意之地 = 1081,
+    萌芽池 = 1060,
+    红玉海 = 1167,
+    宇宙和音 = 1173,
+    沃仙曦染 = 1174,
+    晨曦王座 = 1175,
+    
+    
+    // China - MoGuLi
+    潮风亭 = 1170,
+    神拳痕 = 1171,
+    白银乡 = 1172,
+    白金幻象 = 1076,
+    旅人栈桥 = 1113,
+    拂晓之间 = 1121,
+    龙巢神殿 = 1166,
+    梦羽宝境 = 1176,
+    
+    // China - MaoXiaoPang
+    紫水栈桥 = 1043,
+    延夏 = 1169,
+    静语庄园 = 1106,
+    摩杜纳 = 1045,
+    海猫茶屋 = 1177,
+    柔风海湾 = 1178,
+    琥珀原 = 1179,
+    
+    // China - DouDouChai
+    水晶塔 = 1192,
+    银泪湖 = 1183,
+    太阳海岸 = 1180,
+    伊修加德 = 1186,
+    红茶川 = 1201,
 }
 
 public static class FfxivTravelMap
@@ -183,7 +184,7 @@ public static class FfxivTravelMap
             [Region.Europe] = new[] { Datacenter.Chaos, Datacenter.Light },
             [Region.Japan] = new[] { Datacenter.Elemental, Datacenter.Gaia, Datacenter.Mana, Datacenter.Meteor },
             [Region.Oceania] = new[] { Datacenter.Materia },
-            [Region.China] = new[] { Datacenter.MaoXiaoPang, Datacenter.MoGuLi, Datacenter.DouDouChai, Datacenter.LuXingNiao },
+            [Region.China] = new[] { Datacenter.陆行鸟, Datacenter.莫古力, Datacenter.猫小胖, Datacenter.豆豆柴  },
         };
 
     public static readonly IReadOnlyDictionary<Datacenter, IReadOnlyList<World>> WorldsByDatacenter =
@@ -243,24 +244,24 @@ public static class FfxivTravelMap
             {
                 World.Bismarck, World.Ravana, World.Sephirot, World.Sophia, World.Zurvan,
             },
-            [Datacenter.MaoXiaoPang] = new[]
+            [Datacenter.陆行鸟] = new[]
             {
-                World.ZiShuiZhanQiao, World.YanXia, World.JingYuZhuangYuan, World.MoDuNa,
-                World.HaiMaoChaWu, World.RouFengHaiWan, World.HuPoYuan,
+                World.拉诺西亚, World.幻影群岛, World.神意之地, World.萌芽池, 
+                World.红玉海, World.宇宙和音, World.沃仙曦染, World.晨曦王座,
             },
-            [Datacenter.MoGuLi] = new[]
+            [Datacenter.莫古力] = new[]
             {
-                World.BaiYinXiang, World.BaiJinHuanXiang, World.ShenQuanHen, World.ChaoFengTing,
-                World.LvRenZhanQiao, World.FuXiaoZhiJian, World.Longchaoshendian, World.MengYuBaoJing,
+                World.潮风亭, World.神拳痕, World.白银乡, World.白金幻象,
+                World.旅人栈桥, World.拂晓之间, World.龙巢神殿, World.梦羽宝境,
             },
-            [Datacenter.DouDouChai] = new[]
+            [Datacenter.猫小胖] = new[]
             {
-                World.ShuiJingTa2, World.YinLeiHu2, World.TaiYangHaiAn2, World.YiXiuJiaDe2, World.HongChaChuan2,
+                World.紫水栈桥, World.延夏, World.静语庄园, World.摩杜纳,
+                World.海猫茶屋, World.柔风海湾, World.琥珀原,
             },
-            [Datacenter.LuXingNiao] = new[]
+            [Datacenter.豆豆柴] = new[]
             {
-                World.HongYuHai, World.ShenYiZhiDi, World.LaNuoXiYa, World.HuanYingQunDao,
-                World.MengYaChi, World.YuZhouHeYin, World.WoXianXiRan, World.ChenXiWangZuo,
+                World.水晶塔, World.银泪湖, World.太阳海岸, World.伊修加德, World.红茶川,
             },
         };
 
