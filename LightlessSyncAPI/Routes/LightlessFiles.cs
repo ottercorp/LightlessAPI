@@ -54,7 +54,11 @@ public class LightlessFiles
 
     public static Uri ServerFilesDeleteAllFullPath(Uri baseUri) => new(baseUri, ServerFiles + "/" + ServerFiles_DeleteAll);
     public static Uri ServerFilesFilesSendFullPath(Uri baseUri) => new(baseUri, ServerFiles + "/" + ServerFiles_FilesSend);
-    public static Uri ServerFilesGetSizesFullPath(Uri baseUri) => new(baseUri, ServerFiles + "/" + ServerFiles_GetSizes);
+    public static Uri ServerFilesGetSizesFullPath(Uri baseUri, string? format = null)
+    {
+        var uri = new Uri(baseUri, ServerFiles + "/" + ServerFiles_GetSizes);
+        return string.IsNullOrWhiteSpace(format) ? uri : WithFileFormat(uri, format);
+    }
     public static Uri ServerFilesUploadFullPath(Uri baseUri, string hash) => new(baseUri, ServerFiles + "/" + ServerFiles_Upload + "/" + hash);
     public static Uri ServerFilesUploadMunged(Uri baseUri, string hash) => new(baseUri, ServerFiles + "/" + ServerFiles_UploadMunged + "/" + hash);
     public static Uri ServerFilesUploadAscfFullPath(Uri baseUri, string hash) => new(baseUri, ServerFiles + "/" + ServerFiles_UploadAscf + "/" + hash);
