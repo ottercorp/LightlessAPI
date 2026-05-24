@@ -1,4 +1,6 @@
-﻿namespace LightlessSync.API.Routes;
+using System.Globalization;
+
+namespace LightlessSync.API.Routes;
 
 public class LightlessFiles
 {
@@ -17,14 +19,16 @@ public class LightlessFiles
     public const string ServerFiles_GetSizes = "getFileSizes";
     public const string ServerFiles_Upload = "upload";
     public const string ServerFiles_UploadMunged = "uploadMunged";
-    public const string ServerFiles_UploadLls2 = "uploadLls2";
-    public const string ServerFiles_UploadLls2Munged = "uploadLls2Munged";
+    public const string ServerFiles_UploadAscf = "uploadAscf";
+    public const string ServerFiles_UploadAscfMunged = "uploadAscfMunged";
     public const string ServerFiles_DownloadServers = "downloadServers";
     public const string ServerFiles_DirectDownload = "direct";
+    public const string ServerFiles_AscfResume = "ascfResume";
 
     public const string FileFormatQueryParameter = "format";
+    public const string AscfResumeEncodedBytesQueryParameter = "encodedBytes";
     public const string FileFormatWrappedLz4 = "lz4";
-    public const string FileFormatLls2 = "lls2";
+    public const string FileFormatAscf = "ascf";
     public const string FileFormatResponseHeader = "X-Lightless-File-Format";
 
     public const string Distribution = "/dist";
@@ -53,15 +57,53 @@ public class LightlessFiles
     public static Uri ServerFilesGetSizesFullPath(Uri baseUri) => new(baseUri, ServerFiles + "/" + ServerFiles_GetSizes);
     public static Uri ServerFilesUploadFullPath(Uri baseUri, string hash) => new(baseUri, ServerFiles + "/" + ServerFiles_Upload + "/" + hash);
     public static Uri ServerFilesUploadMunged(Uri baseUri, string hash) => new(baseUri, ServerFiles + "/" + ServerFiles_UploadMunged + "/" + hash);
-    public static Uri ServerFilesUploadLls2FullPath(Uri baseUri, string hash) => new(baseUri, ServerFiles + "/" + ServerFiles_UploadLls2 + "/" + hash);
-    public static Uri ServerFilesUploadLls2Munged(Uri baseUri, string hash) => new(baseUri, ServerFiles + "/" + ServerFiles_UploadLls2Munged + "/" + hash);
+    public static Uri ServerFilesUploadAscfFullPath(Uri baseUri, string hash) => new(baseUri, ServerFiles + "/" + ServerFiles_UploadAscf + "/" + hash);
+    public static Uri ServerFilesUploadAscfMunged(Uri baseUri, string hash) => new(baseUri, ServerFiles + "/" + ServerFiles_UploadAscfMunged + "/" + hash);
     public static Uri ServerFilesGetDownloadServersFullPath(Uri baseUri) => new(baseUri, ServerFiles + "/" + ServerFiles_DownloadServers);
     public static Uri ServerFilesDirectDownloadFullPath(Uri baseUri, string hash, string? format = null)
     {
         var uri = new Uri(baseUri, ServerFiles + "/" + ServerFiles_DirectDownload + "/" + hash);
         return string.IsNullOrWhiteSpace(format) ? uri : WithFileFormat(uri, format);
     }
-    public static Uri DistributionGetFullPath(Uri baseUri, string hash) => new(baseUri, Distribution + "/" + Distribution_Get + "?file=" + hash);
+
+    public static Uri ServerFilesAscfResumeFullPath(Uri baseUri, string hash, long encodedBytes = 0)
+    {
+        var uri = new Uri(baseUri, ServerFiles + "/" + ServerFiles_DirectDownload + "/" + hash + "/" + ServerFiles_AscfResume);
+        if (encodedBytes <= 0)
+        {
+            return uri;
+        }
+
+        var builder = new UriBuilder(uri)
+        {
+            Query = AscfResumeEncodedBytesQueryParameter + "=" + encodedBytes.ToString(CultureInfo.InvariantCulture)
+        };
+        return builder.Uri;
+    }
+
+    public static Uri DistributionGetFullPath(Uri baseUri, string hash, string? format = null)
+    {
+        var uri = new Uri(baseUri, Distribution + "/" + Distribution_Get + "?file=" + Uri.EscapeDataString(hash));
+        return string.IsNullOrWhiteSpace(format) ? uri : WithFileFormat(uri, format);
+    }
+
+    public static Uri DistributionAscfResumeFullPath(Uri baseUri, string hash, long encodedBytes = 0)
+    {
+        var uri = new Uri(baseUri, Distribution + "/" + Distribution_Get + "/" + ServerFiles_AscfResume + "?file=" + Uri.EscapeDataString(hash));
+        if (encodedBytes <= 0)
+        {
+            return uri;
+        }
+
+        var builder = new UriBuilder(uri);
+        var query = builder.Query.TrimStart('?');
+        var encodedBytesQuery = AscfResumeEncodedBytesQueryParameter + "=" + encodedBytes.ToString(CultureInfo.InvariantCulture);
+        builder.Query = string.IsNullOrWhiteSpace(query)
+            ? encodedBytesQuery
+            : query + "&" + encodedBytesQuery;
+        return builder.Uri;
+    }
+
     public static Uri SpeedtestRunFullPath(Uri baseUri) => new(baseUri, Speedtest + "/" + Speedtest_Run);
     public static Uri MainSendReadyFullPath(Uri baseUri, string uid, Guid request) => new(baseUri, Main + "/" + Main_SendReady + "/" + "?uid=" + uid + "&requestId=" + request.ToString());
     public static Uri MainShardFilesFullPath(Uri baseUri) => new(baseUri, Main + "/" + Main_ShardFiles);

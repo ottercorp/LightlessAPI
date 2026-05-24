@@ -1,4 +1,4 @@
-﻿using LightlessSync.API.Data;
+using LightlessSync.API.Data;
 using MessagePack;
 
 namespace LightlessSync.API.Dto;
@@ -14,6 +14,7 @@ public record ConnectionDto(UserData User)
     public string? TextColorHex { get; set; }
     public string? TextGlowColorHex { get; set; }
     public ServerInfo ServerInfo { get; set; } = new();
+    public ServerCapabilitiesDto ServerCapabilities { get; set; } = new();
     public DefaultPermissionsDto DefaultPreferredPermissions { get; set; } = new();
 }
 
@@ -27,4 +28,18 @@ public record ServerInfo
     public Uri FileServerAddress { get; set; } = new Uri("http://nonemptyuri");
     public int MaxCharaData { get; set; }
     public int MaxCharaDataVanity { get; set; }
+}
+
+[MessagePackObject(keyAsPropertyName: true)]
+public record ServerCapabilitiesDto
+{
+    public FileTransferCapabilitiesDto FileTransfers { get; set; } = new();
+}
+
+[MessagePackObject(keyAsPropertyName: true)]
+public record FileTransferCapabilitiesDto
+{
+    public bool SupportsAscfUpload { get; set; }
+    public bool SupportsAscfDownload { get; set; }
+    public bool SupportsAscfResume { get; set; }
 }
