@@ -63,7 +63,7 @@ public interface ILightlessHub
     Task<bool> GroupChangePassword(GroupPasswordDto groupPassword);
     Task GroupClear(GroupDto group);
     Task GroupClearFinder(GroupDto group);
-    Task<GroupJoinDto> GroupCreate();
+    Task<GroupJoinDto> GroupCreate(bool useRandomPassword = true);
     Task<List<string>> GroupCreateTempInvite(GroupDto group, int amount);
     Task GroupDelete(GroupDto group);
     Task<List<BannedGroupUserDto>> GroupGetBannedUsers(GroupDto group);
