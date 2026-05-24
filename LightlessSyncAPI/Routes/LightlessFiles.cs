@@ -73,16 +73,21 @@ public class LightlessFiles
     public static Uri ServerFilesAscfResumeFullPath(Uri baseUri, string hash, long encodedBytes = 0)
     {
         var uri = new Uri(baseUri, ServerFiles + "/" + ServerFiles_DirectDownload + "/" + hash + "/" + ServerFiles_AscfResume);
-        if (encodedBytes <= 0)
-        {
-            return uri;
-        }
+        return encodedBytes <= 0
+            ? uri
+            : WithQueryParameter(uri, AscfResumeEncodedBytesQueryParameter, encodedBytes.ToString(CultureInfo.InvariantCulture));
+    }
 
-        var builder = new UriBuilder(uri)
+    public static Uri ServerFilesAscfResumeFromDirectDownloadFullPath(Uri directDownloadUri, long encodedBytes = 0)
+    {
+        var builder = new UriBuilder(directDownloadUri)
         {
-            Query = AscfResumeEncodedBytesQueryParameter + "=" + encodedBytes.ToString(CultureInfo.InvariantCulture)
+            Path = directDownloadUri.AbsolutePath.TrimEnd('/') + "/" + ServerFiles_AscfResume
         };
-        return builder.Uri;
+
+        return encodedBytes <= 0
+            ? builder.Uri
+            : WithQueryParameter(builder.Uri, AscfResumeEncodedBytesQueryParameter, encodedBytes.ToString(CultureInfo.InvariantCulture));
     }
 
     public static Uri DistributionGetFullPath(Uri baseUri, string hash, string? format = null)
@@ -94,18 +99,9 @@ public class LightlessFiles
     public static Uri DistributionAscfResumeFullPath(Uri baseUri, string hash, long encodedBytes = 0)
     {
         var uri = new Uri(baseUri, Distribution + "/" + Distribution_Get + "/" + ServerFiles_AscfResume + "?file=" + Uri.EscapeDataString(hash));
-        if (encodedBytes <= 0)
-        {
-            return uri;
-        }
-
-        var builder = new UriBuilder(uri);
-        var query = builder.Query.TrimStart('?');
-        var encodedBytesQuery = AscfResumeEncodedBytesQueryParameter + "=" + encodedBytes.ToString(CultureInfo.InvariantCulture);
-        builder.Query = string.IsNullOrWhiteSpace(query)
-            ? encodedBytesQuery
-            : query + "&" + encodedBytesQuery;
-        return builder.Uri;
+        return encodedBytes <= 0
+            ? uri
+            : WithQueryParameter(uri, AscfResumeEncodedBytesQueryParameter, encodedBytes.ToString(CultureInfo.InvariantCulture));
     }
 
     public static Uri SpeedtestRunFullPath(Uri baseUri) => new(baseUri, Speedtest + "/" + Speedtest_Run);
@@ -132,12 +128,27 @@ public class LightlessFiles
     }
 
     private static bool IsFileFormatQueryPart(string queryPart)
+        => IsQueryParameterPart(queryPart, FileFormatQueryParameter);
+
+    private static Uri WithQueryParameter(Uri uri, string name, string value)
+    {
+        var builder = new UriBuilder(uri);
+        var query = builder.Query.TrimStart('?');
+        var queryPart = Uri.EscapeDataString(name) + "=" + Uri.EscapeDataString(value);
+        var existing = query
+            .Split('&', StringSplitOptions.RemoveEmptyEntries)
+            .Where(part => !IsQueryParameterPart(part, name));
+
+        builder.Query = string.IsNullOrWhiteSpace(query)
+            ? queryPart
+            : string.Join("&", existing.Append(queryPart));
+        return builder.Uri;
+    }
+
+    private static bool IsQueryParameterPart(string queryPart, string name)
     {
         var equalsIndex = queryPart.IndexOf('=');
         var key = equalsIndex >= 0 ? queryPart[..equalsIndex] : queryPart;
-        return string.Equals(
-            Uri.UnescapeDataString(key),
-            FileFormatQueryParameter,
-            StringComparison.OrdinalIgnoreCase);
+        return string.Equals(Uri.UnescapeDataString(key), name, StringComparison.OrdinalIgnoreCase);
     }
 }
