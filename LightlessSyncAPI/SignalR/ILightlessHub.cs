@@ -3,6 +3,7 @@ using LightlessSync.API.Data.Enum;
 using LightlessSync.API.Dto;
 using LightlessSync.API.Dto.Chat;
 using LightlessSync.API.Dto.CharaData;
+using LightlessSync.API.Dto.CommunityBoard;
 using LightlessSync.API.Dto.Group;
 using LightlessSync.API.Dto.User;
 
@@ -62,7 +63,7 @@ public interface ILightlessHub
     Task<bool> GroupChangePassword(GroupPasswordDto groupPassword);
     Task GroupClear(GroupDto group);
     Task GroupClearFinder(GroupDto group);
-    Task<GroupJoinDto> GroupCreate();
+    Task<GroupJoinDto> GroupCreate(bool useRandomPassword = true);
     Task<List<string>> GroupCreateTempInvite(GroupDto group, int amount);
     Task GroupDelete(GroupDto group);
     Task<List<BannedGroupUserDto>> GroupGetBannedUsers(GroupDto group);
@@ -136,4 +137,10 @@ public interface ILightlessHub
     Task<bool> ToggleLocationSharing(LocationSharingToggleDto dto);
     Task<List<GroupUserDto>> GroupGetUsers(GroupDto dto);
     Task ApplyMoodles(UserData target, string data);
+
+    Task<List<PostingDto>> CommunityBoardGetPostings(World callerWorld);
+    Task<PostingDto?> CommunityBoardCreatePosting(PostingCreateRequest request);
+    Task<PostingDto?> CommunityBoardEditPosting(PostingEditRequest request);
+    Task CommunityBoardDeletePosting(Guid postingGuid);
+
 }
