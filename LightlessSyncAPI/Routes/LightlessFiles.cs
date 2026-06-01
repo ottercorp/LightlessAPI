@@ -49,7 +49,11 @@ public class LightlessFiles
 
     public static Uri RequestCancelFullPath(Uri baseUri, Guid guid) => new Uri(baseUri, Request + "/" + Request_Cancel + "?requestId=" + guid.ToString());
     public static Uri RequestCheckQueueFullPath(Uri baseUri, Guid guid) => new Uri(baseUri, Request + "/" + Request_Check + "?requestId=" + guid.ToString());
-    public static Uri RequestEnqueueFullPath(Uri baseUri) => new(baseUri, Request + "/" + Request_Enqueue);
+    public static Uri RequestEnqueueFullPath(Uri baseUri, string? format = null)
+    {
+        var uri = new Uri(baseUri, Request + "/" + Request_Enqueue);
+        return string.IsNullOrWhiteSpace(format) ? uri : WithFileFormat(uri, format);
+    }
     public static Uri RequestRequestFileFullPath(Uri baseUri, string hash) => new(baseUri, Request + "/" + Request_RequestFile + "?file=" + hash);
 
     public static Uri ServerFilesDeleteAllFullPath(Uri baseUri) => new(baseUri, ServerFiles + "/" + ServerFiles_DeleteAll);
