@@ -6,4 +6,5 @@ public enum ObjectKind
     MinionOrMount = 1,
     Companion = 2,
     Pet = 3,
+    FashionAccessory = 4,
 }
