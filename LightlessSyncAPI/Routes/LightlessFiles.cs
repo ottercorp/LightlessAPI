@@ -21,12 +21,17 @@ public class LightlessFiles
     public const string ServerFiles_UploadMunged = "uploadMunged";
     public const string ServerFiles_UploadAscf = "uploadAscf";
     public const string ServerFiles_UploadAscfMunged = "uploadAscfMunged";
+    public const string ServerFiles_UploadAscfChunk = "uploadAscfChunk";
+    public const string ServerFiles_UploadAscfChunkMunged = "uploadAscfChunkMunged";
     public const string ServerFiles_DownloadServers = "downloadServers";
     public const string ServerFiles_DirectDownload = "direct";
     public const string ServerFiles_AscfResume = "ascfResume";
 
     public const string FileFormatQueryParameter = "format";
     public const string AscfResumeEncodedBytesQueryParameter = "encodedBytes";
+    public const string AscfUploadIdQueryParameter = "uploadId";
+    public const string AscfUploadOffsetQueryParameter = "offset";
+    public const string AscfUploadTotalSizeQueryParameter = "totalSize";
     public const string FileFormatWrappedLz4 = "lz4";
     public const string FileFormatAscf = "ascf";
     public const string FileFormatResponseHeader = "X-Lightless-File-Format";
@@ -67,6 +72,10 @@ public class LightlessFiles
     public static Uri ServerFilesUploadMunged(Uri baseUri, string hash) => new(baseUri, ServerFiles + "/" + ServerFiles_UploadMunged + "/" + hash);
     public static Uri ServerFilesUploadAscfFullPath(Uri baseUri, string hash) => new(baseUri, ServerFiles + "/" + ServerFiles_UploadAscf + "/" + hash);
     public static Uri ServerFilesUploadAscfMunged(Uri baseUri, string hash) => new(baseUri, ServerFiles + "/" + ServerFiles_UploadAscfMunged + "/" + hash);
+    public static Uri ServerFilesUploadAscfChunkFullPath(Uri baseUri, string hash, Guid uploadId, long offset, long totalSize)
+        => WithAscfUploadChunkQuery(new(baseUri, ServerFiles + "/" + ServerFiles_UploadAscfChunk + "/" + hash), uploadId, offset, totalSize);
+    public static Uri ServerFilesUploadAscfChunkMunged(Uri baseUri, string hash, Guid uploadId, long offset, long totalSize)
+        => WithAscfUploadChunkQuery(new(baseUri, ServerFiles + "/" + ServerFiles_UploadAscfChunkMunged + "/" + hash), uploadId, offset, totalSize);
     public static Uri ServerFilesGetDownloadServersFullPath(Uri baseUri) => new(baseUri, ServerFiles + "/" + ServerFiles_DownloadServers);
     public static Uri ServerFilesDirectDownloadFullPath(Uri baseUri, string hash, string? format = null)
     {
@@ -129,6 +138,13 @@ public class LightlessFiles
 
         builder.Query = string.Join("&", existing.Append(formatQuery));
         return builder.Uri;
+    }
+
+    private static Uri WithAscfUploadChunkQuery(Uri uri, Guid uploadId, long offset, long totalSize)
+    {
+        uri = WithQueryParameter(uri, AscfUploadIdQueryParameter, uploadId.ToString("N"));
+        uri = WithQueryParameter(uri, AscfUploadOffsetQueryParameter, offset.ToString(CultureInfo.InvariantCulture));
+        return WithQueryParameter(uri, AscfUploadTotalSizeQueryParameter, totalSize.ToString(CultureInfo.InvariantCulture));
     }
 
     private static bool IsFileFormatQueryPart(string queryPart)
