@@ -42,4 +42,8 @@ public record FileTransferCapabilitiesDto
     public bool SupportsAscfUpload { get; set; }
     public bool SupportsAscfDownload { get; set; }
     public bool SupportsAscfResume { get; set; }
+    public bool SupportsAscfChunkUpload { get; set; }
+    public int AscfUploadChunkSizeBytes { get; set; }
+    public bool SupportsXuastcDerivedDownload { get; set; }
+    public string XuastcDerivedProfile { get; set; } = string.Empty;
 }
