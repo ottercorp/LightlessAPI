@@ -49,6 +49,9 @@ public class LightlessFiles
 
     public const string Main = "/main";
     public const string Main_SendReady = "sendReady";
+    public const string Main_ShardRegister = "shardRegister";
+    public const string Main_ShardUnregister = "shardUnregister";
+    public const string Main_ShardHeartbeat = "shardHeartbeat";
     public const string Main_ShardFiles = "shardFiles";
 
     public const string Speedtest = "/speedtest";
@@ -138,6 +141,9 @@ public class LightlessFiles
 
     public static Uri SpeedtestRunFullPath(Uri baseUri) => new(baseUri, Speedtest + "/" + Speedtest_Run);
     public static Uri MainSendReadyFullPath(Uri baseUri, string uid, Guid request) => new(baseUri, Main + "/" + Main_SendReady + "/" + "?uid=" + uid + "&requestId=" + request.ToString());
+    public static Uri MainShardRegisterFullPath(Uri baseUri) => new(baseUri, Main + "/" + Main_ShardRegister);
+    public static Uri MainShardUnregisterFullPath(Uri baseUri) => new(baseUri, Main + "/" + Main_ShardUnregister);
+    public static Uri MainShardHeartbeatFullPath(Uri baseUri) => new(baseUri, Main + "/" + Main_ShardHeartbeat);
     public static Uri MainShardFilesFullPath(Uri baseUri) => new(baseUri, Main + "/" + Main_ShardFiles);
 
     public static Uri WithFileFormat(Uri uri, string format)
