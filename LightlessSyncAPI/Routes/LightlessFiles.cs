@@ -24,6 +24,8 @@ public class LightlessFiles
     public const string ServerFiles_UploadAscfChunk = "uploadAscfChunk";
     public const string ServerFiles_UploadAscfChunkMunged = "uploadAscfChunkMunged";
     public const string ServerFiles_DownloadServers = "downloadServers";
+    public const string ServerFiles_Gateways = "gateways";
+    public const string ServerFiles_GatewayStatus = "gatewayStatus";
     public const string ServerFiles_DirectDownload = "direct";
     public const string ServerFiles_AscfResume = "ascfResume";
     public const string ServerFiles_Derived = "derived";
@@ -93,6 +95,8 @@ public class LightlessFiles
     public static Uri ServerFilesUploadAscfChunkMunged(Uri baseUri, string hash, Guid uploadId, long offset, long totalSize)
         => WithAscfUploadChunkQuery(new(baseUri, ServerFiles + "/" + ServerFiles_UploadAscfChunkMunged + "/" + hash), uploadId, offset, totalSize);
     public static Uri ServerFilesGetDownloadServersFullPath(Uri baseUri) => new(baseUri, ServerFiles + "/" + ServerFiles_DownloadServers);
+    public static Uri ServerFilesGatewaysFullPath(Uri baseUri) => new(baseUri, ServerFiles + "/" + ServerFiles_Gateways);
+    public static Uri ServerFilesGatewayStatusFullPath(Uri baseUri) => new(baseUri, ServerFiles + "/" + ServerFiles_GatewayStatus);
     public static Uri ServerFilesDirectDownloadFullPath(Uri baseUri, string hash, string? format = null)
     {
         var uri = new Uri(baseUri, ServerFiles + "/" + ServerFiles_DirectDownload + "/" + hash);
