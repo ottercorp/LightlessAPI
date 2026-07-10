@@ -2,6 +2,9 @@
 
 public class LightlessAuth
 {
+    public const string GatewayPublicBaseUriHeader = "X-Lightless-Gateway-Public-Base-Uri";
+    public const string GatewayInternalAuthorizationHeader = "X-Lightless-Gateway-Authorization";
+
     public const string OAuth = "/oauth";
     public const string Auth = "/auth";
     public const string XIVAuth = "/xivauth";
@@ -13,8 +16,12 @@ public class LightlessAuth
     public const string OAuth_GetDiscordOAuthEndpoint = "getDiscordOAuthEndpoint";
     public const string OAuth_GetUIDs = "getUIDs";
     public const string OAuth_GetDiscordOAuthToken = "getDiscordOAuthToken";
+    public const string OAuth_DiscordCall = "discordCall";
+    public const string OAuth_DiscordCallback = "discordCallback";
     public const string XIVAuth_GetEndpoint = "plugin/endpoint";
     public const string XIVAuth_GetToken = "plugin/token";
+    public const string XIVAuth_PluginLogin = "plugin/login";
+    public const string XIVAuth_PluginCallback = "plugin/callback";
     public const string User = "/user";
     public const string Group = "/group";
     public const string User_Unban_Discord = "unbanDiscord";

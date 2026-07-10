@@ -24,6 +24,8 @@ public class LightlessFiles
     public const string ServerFiles_UploadAscfChunk = "uploadAscfChunk";
     public const string ServerFiles_UploadAscfChunkMunged = "uploadAscfChunkMunged";
     public const string ServerFiles_DownloadServers = "downloadServers";
+    public const string ServerFiles_Gateways = "gateways";
+    public const string ServerFiles_GatewayStatus = "gatewayStatus";
     public const string ServerFiles_DirectDownload = "direct";
     public const string ServerFiles_AscfResume = "ascfResume";
     public const string ServerFiles_Derived = "derived";
@@ -49,6 +51,9 @@ public class LightlessFiles
 
     public const string Main = "/main";
     public const string Main_SendReady = "sendReady";
+    public const string Main_ShardRegister = "shardRegister";
+    public const string Main_ShardUnregister = "shardUnregister";
+    public const string Main_ShardHeartbeat = "shardHeartbeat";
     public const string Main_ShardFiles = "shardFiles";
 
     public const string Speedtest = "/speedtest";
@@ -90,6 +95,8 @@ public class LightlessFiles
     public static Uri ServerFilesUploadAscfChunkMunged(Uri baseUri, string hash, Guid uploadId, long offset, long totalSize)
         => WithAscfUploadChunkQuery(new(baseUri, ServerFiles + "/" + ServerFiles_UploadAscfChunkMunged + "/" + hash), uploadId, offset, totalSize);
     public static Uri ServerFilesGetDownloadServersFullPath(Uri baseUri) => new(baseUri, ServerFiles + "/" + ServerFiles_DownloadServers);
+    public static Uri ServerFilesGatewaysFullPath(Uri baseUri) => new(baseUri, ServerFiles + "/" + ServerFiles_Gateways);
+    public static Uri ServerFilesGatewayStatusFullPath(Uri baseUri) => new(baseUri, ServerFiles + "/" + ServerFiles_GatewayStatus);
     public static Uri ServerFilesDirectDownloadFullPath(Uri baseUri, string hash, string? format = null)
     {
         var uri = new Uri(baseUri, ServerFiles + "/" + ServerFiles_DirectDownload + "/" + hash);
@@ -138,6 +145,9 @@ public class LightlessFiles
 
     public static Uri SpeedtestRunFullPath(Uri baseUri) => new(baseUri, Speedtest + "/" + Speedtest_Run);
     public static Uri MainSendReadyFullPath(Uri baseUri, string uid, Guid request) => new(baseUri, Main + "/" + Main_SendReady + "/" + "?uid=" + uid + "&requestId=" + request.ToString());
+    public static Uri MainShardRegisterFullPath(Uri baseUri) => new(baseUri, Main + "/" + Main_ShardRegister);
+    public static Uri MainShardUnregisterFullPath(Uri baseUri) => new(baseUri, Main + "/" + Main_ShardUnregister);
+    public static Uri MainShardHeartbeatFullPath(Uri baseUri) => new(baseUri, Main + "/" + Main_ShardHeartbeat);
     public static Uri MainShardFilesFullPath(Uri baseUri) => new(baseUri, Main + "/" + Main_ShardFiles);
 
     public static Uri WithFileFormat(Uri uri, string format)
