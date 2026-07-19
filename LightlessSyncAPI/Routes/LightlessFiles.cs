@@ -29,7 +29,7 @@ public class LightlessFiles
     public const string ServerFiles_DirectDownload = "direct";
     public const string ServerFiles_AscfResume = "ascfResume";
     public const string ServerFiles_Derived = "derived";
-    public const string ServerFiles_DerivedXuastc = "xuastc";
+    public const string ServerFiles_DerivedXubc7 = "xubc7";
     public const string ServerFiles_DerivedPrepare = "prepare";
 
     public const string FileFormatQueryParameter = "format";
@@ -41,9 +41,9 @@ public class LightlessFiles
     public const string FileFormatAscf = "ascf";
     public const string FileFormatResponseHeader = "X-Lightless-File-Format";
     public const string DerivedFormatQueryParameter = "derived";
-    public const string Derived_Xuastc = "xuastc";
-    public const string DerivedXuastcDefaultProfile = "default";
-    public const string DerivedXuastcProfileResponseHeader = "X-Lightless-Derived-Xuastc-Profile";
+    public const string Derived_Xubc7 = "xubc7";
+    public const string DerivedXubc7DefaultProfile = "default";
+    public const string DerivedXubc7ProfileResponseHeader = "X-Lightless-Derived-Xubc7-Profile";
     public const string DerivedSourceHashResponseHeader = "X-Lightless-Derived-Source-Hash";
 
     public const string Distribution = "/dist";
@@ -103,11 +103,11 @@ public class LightlessFiles
         return string.IsNullOrWhiteSpace(format) ? uri : WithFileFormat(uri, format);
     }
 
-    public static Uri ServerFilesDerivedXuastcFullPath(Uri baseUri, string profile, string hash)
-        => new(baseUri, ServerFilesDerivedXuastcPath(profile, hash));
+    public static Uri ServerFilesDerivedXubc7FullPath(Uri baseUri, string profile, string hash)
+        => new(baseUri, ServerFilesDerivedXubc7Path(profile, hash));
 
-    public static Uri ServerFilesDerivedXuastcPrepareFullPath(Uri baseUri, string profile, string hash)
-        => new(baseUri, ServerFilesDerivedXuastcPath(profile, hash) + "/" + ServerFiles_DerivedPrepare);
+    public static Uri ServerFilesDerivedXubc7PrepareFullPath(Uri baseUri, string profile, string hash)
+        => new(baseUri, ServerFilesDerivedXubc7Path(profile, hash) + "/" + ServerFiles_DerivedPrepare);
 
     public static Uri ServerFilesAscfResumeFullPath(Uri baseUri, string hash, long encodedBytes = 0)
     {
@@ -182,12 +182,12 @@ public class LightlessFiles
     private static bool IsFileFormatQueryPart(string queryPart)
         => IsQueryParameterPart(queryPart, FileFormatQueryParameter);
 
-    private static string ServerFilesDerivedXuastcPath(string profile, string hash)
+    private static string ServerFilesDerivedXubc7Path(string profile, string hash)
         => ServerFiles
             + "/"
             + ServerFiles_Derived
             + "/"
-            + ServerFiles_DerivedXuastc
+            + ServerFiles_DerivedXubc7
             + "/"
             + Uri.EscapeDataString(profile)
             + "/"

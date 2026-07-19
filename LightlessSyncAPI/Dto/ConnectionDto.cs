@@ -47,8 +47,8 @@ public record FileTransferCapabilitiesDto
     public bool SupportsAscfChunkUpload { get; set; }
     public int AscfUploadChunkSizeBytes { get; set; }
     public long MaxUploadSizeBytes { get; set; }
-    public bool SupportsXuastcDerivedDownload { get; set; }
-    public string XuastcDerivedProfile { get; set; } = string.Empty;
+    public bool SupportsXubc7DerivedDownload { get; set; }
+    public string Xubc7DerivedProfile { get; set; } = string.Empty;
 }
 
 [MessagePackObject(keyAsPropertyName: true)]
