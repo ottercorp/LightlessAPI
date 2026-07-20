@@ -8,4 +8,5 @@ public record TemporarySyncPairDto(
     OnlineUserIdentDto User,
     TemporarySyncSource Sources,
     UserPermissions OwnPermissions,
-    UserPermissions OtherPermissions);
+    UserPermissions OtherPermissions,
+    TemporarySyncChangeReason ChangeReason = TemporarySyncChangeReason.Snapshot);
