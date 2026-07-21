@@ -35,6 +35,7 @@ public interface ILightlessHubClient : ILightlessHub
     void OnPairReceiveVisualSingle(Action<PairInboundDto<PairVisualDeltaDto>> act);
     void OnPairReceiveVisualDelta(Action<PairInboundDto<PairVisualDeltaDto>> act);
     void OnPairReceiveModDelta(Action<OnlineUserModDataDto> act);
+    void OnTemporarySyncPairChanged(Action<TemporarySyncPairDto> act);
     void OnUserReceiveUploadStatus(Action<UserDto> act);
 
     void OnUserRemoveClientPair(Action<UserDto> act);

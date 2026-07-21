@@ -11,7 +11,7 @@ namespace LightlessSync.API.SignalR;
 
 public interface ILightlessHub
 {
-    const int ApiVersion = 38;
+    const int ApiVersion = 37;
     const string Path = "/lightless";
 
     Task<bool> CheckClientHealth();
@@ -33,6 +33,7 @@ public interface ILightlessHub
     Task Client_PairReceiveVisualSingle(PairInboundDto<PairVisualDeltaDto> dataDto);
     Task Client_PairReceiveVisualDelta(PairInboundDto<PairVisualDeltaDto> dataDto);
     Task Client_PairReceiveModDelta(OnlineUserModDataDto dataDto);
+    Task Client_TemporarySyncPairChanged(TemporarySyncPairDto dto);
     Task Client_UserReceiveUploadStatus(UserDto dto);
     Task Client_UserRemoveClientPair(UserDto dto);
     Task Client_UserSendOffline(UserDto dto);
@@ -104,6 +105,8 @@ public interface ILightlessHub
     Task PairPushVisualSingle(PairOutboundDto<PairVisualDeltaDto> dto);
     Task PairPushVisualDelta(PairOutboundDto<PairVisualDeltaDto> dto);
     Task PairPushModDelta(UserModDataMessageDto dto);
+    Task<IReadOnlyList<TemporarySyncPairDto>> TemporarySyncUpdateClaims(TemporarySyncClaimDto dto);
+    Task<IReadOnlyList<TemporarySyncPairDto>> TemporarySyncClearClaims(TemporarySyncSource source);
 
     Task UserPushData(UserCharaDataMessageDto dto);
     Task UserUpdateVanityColors(UserVanityColorsDto dto);

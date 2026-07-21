@@ -21,21 +21,39 @@ public class LightlessFiles
     public const string ServerFiles_UploadMunged = "uploadMunged";
     public const string ServerFiles_UploadAscf = "uploadAscf";
     public const string ServerFiles_UploadAscfMunged = "uploadAscfMunged";
+    public const string ServerFiles_UploadAscfChunk = "uploadAscfChunk";
+    public const string ServerFiles_UploadAscfChunkMunged = "uploadAscfChunkMunged";
     public const string ServerFiles_DownloadServers = "downloadServers";
+    public const string ServerFiles_Gateways = "gateways";
+    public const string ServerFiles_GatewayStatus = "gatewayStatus";
     public const string ServerFiles_DirectDownload = "direct";
     public const string ServerFiles_AscfResume = "ascfResume";
+    public const string ServerFiles_Derived = "derived";
+    public const string ServerFiles_DerivedXubc7 = "xubc7";
+    public const string ServerFiles_DerivedPrepare = "prepare";
 
     public const string FileFormatQueryParameter = "format";
     public const string AscfResumeEncodedBytesQueryParameter = "encodedBytes";
+    public const string AscfUploadIdQueryParameter = "uploadId";
+    public const string AscfUploadOffsetQueryParameter = "offset";
+    public const string AscfUploadTotalSizeQueryParameter = "totalSize";
     public const string FileFormatWrappedLz4 = "lz4";
     public const string FileFormatAscf = "ascf";
     public const string FileFormatResponseHeader = "X-Lightless-File-Format";
+    public const string DerivedFormatQueryParameter = "derived";
+    public const string Derived_Xubc7 = "xubc7";
+    public const string DerivedXubc7DefaultProfile = "default";
+    public const string DerivedXubc7ProfileResponseHeader = "X-Lightless-Derived-Xubc7-Profile";
+    public const string DerivedSourceHashResponseHeader = "X-Lightless-Derived-Source-Hash";
 
     public const string Distribution = "/dist";
     public const string Distribution_Get = "get";
 
     public const string Main = "/main";
     public const string Main_SendReady = "sendReady";
+    public const string Main_ShardRegister = "shardRegister";
+    public const string Main_ShardUnregister = "shardUnregister";
+    public const string Main_ShardHeartbeat = "shardHeartbeat";
     public const string Main_ShardFiles = "shardFiles";
 
     public const string Speedtest = "/speedtest";
@@ -58,21 +76,38 @@ public class LightlessFiles
 
     public static Uri ServerFilesDeleteAllFullPath(Uri baseUri) => new(baseUri, ServerFiles + "/" + ServerFiles_DeleteAll);
     public static Uri ServerFilesFilesSendFullPath(Uri baseUri) => new(baseUri, ServerFiles + "/" + ServerFiles_FilesSend);
-    public static Uri ServerFilesGetSizesFullPath(Uri baseUri, string? format = null)
+    public static Uri ServerFilesGetSizesFullPath(Uri baseUri, string? format = null, string? derived = null)
     {
         var uri = new Uri(baseUri, ServerFiles + "/" + ServerFiles_GetSizes);
-        return string.IsNullOrWhiteSpace(format) ? uri : WithFileFormat(uri, format);
+        if (!string.IsNullOrWhiteSpace(format))
+            uri = WithFileFormat(uri, format);
+
+        return string.IsNullOrWhiteSpace(derived)
+            ? uri
+            : WithDerivedFormat(uri, derived);
     }
     public static Uri ServerFilesUploadFullPath(Uri baseUri, string hash) => new(baseUri, ServerFiles + "/" + ServerFiles_Upload + "/" + hash);
     public static Uri ServerFilesUploadMunged(Uri baseUri, string hash) => new(baseUri, ServerFiles + "/" + ServerFiles_UploadMunged + "/" + hash);
     public static Uri ServerFilesUploadAscfFullPath(Uri baseUri, string hash) => new(baseUri, ServerFiles + "/" + ServerFiles_UploadAscf + "/" + hash);
     public static Uri ServerFilesUploadAscfMunged(Uri baseUri, string hash) => new(baseUri, ServerFiles + "/" + ServerFiles_UploadAscfMunged + "/" + hash);
+    public static Uri ServerFilesUploadAscfChunkFullPath(Uri baseUri, string hash, Guid uploadId, long offset, long totalSize)
+        => WithAscfUploadChunkQuery(new(baseUri, ServerFiles + "/" + ServerFiles_UploadAscfChunk + "/" + hash), uploadId, offset, totalSize);
+    public static Uri ServerFilesUploadAscfChunkMunged(Uri baseUri, string hash, Guid uploadId, long offset, long totalSize)
+        => WithAscfUploadChunkQuery(new(baseUri, ServerFiles + "/" + ServerFiles_UploadAscfChunkMunged + "/" + hash), uploadId, offset, totalSize);
     public static Uri ServerFilesGetDownloadServersFullPath(Uri baseUri) => new(baseUri, ServerFiles + "/" + ServerFiles_DownloadServers);
+    public static Uri ServerFilesGatewaysFullPath(Uri baseUri) => new(baseUri, ServerFiles + "/" + ServerFiles_Gateways);
+    public static Uri ServerFilesGatewayStatusFullPath(Uri baseUri) => new(baseUri, ServerFiles + "/" + ServerFiles_GatewayStatus);
     public static Uri ServerFilesDirectDownloadFullPath(Uri baseUri, string hash, string? format = null)
     {
         var uri = new Uri(baseUri, ServerFiles + "/" + ServerFiles_DirectDownload + "/" + hash);
         return string.IsNullOrWhiteSpace(format) ? uri : WithFileFormat(uri, format);
     }
+
+    public static Uri ServerFilesDerivedXubc7FullPath(Uri baseUri, string profile, string hash)
+        => new(baseUri, ServerFilesDerivedXubc7Path(profile, hash));
+
+    public static Uri ServerFilesDerivedXubc7PrepareFullPath(Uri baseUri, string profile, string hash)
+        => new(baseUri, ServerFilesDerivedXubc7Path(profile, hash) + "/" + ServerFiles_DerivedPrepare);
 
     public static Uri ServerFilesAscfResumeFullPath(Uri baseUri, string hash, long encodedBytes = 0)
     {
@@ -110,6 +145,9 @@ public class LightlessFiles
 
     public static Uri SpeedtestRunFullPath(Uri baseUri) => new(baseUri, Speedtest + "/" + Speedtest_Run);
     public static Uri MainSendReadyFullPath(Uri baseUri, string uid, Guid request) => new(baseUri, Main + "/" + Main_SendReady + "/" + "?uid=" + uid + "&requestId=" + request.ToString());
+    public static Uri MainShardRegisterFullPath(Uri baseUri) => new(baseUri, Main + "/" + Main_ShardRegister);
+    public static Uri MainShardUnregisterFullPath(Uri baseUri) => new(baseUri, Main + "/" + Main_ShardUnregister);
+    public static Uri MainShardHeartbeatFullPath(Uri baseUri) => new(baseUri, Main + "/" + Main_ShardHeartbeat);
     public static Uri MainShardFilesFullPath(Uri baseUri) => new(baseUri, Main + "/" + Main_ShardFiles);
 
     public static Uri WithFileFormat(Uri uri, string format)
@@ -131,8 +169,29 @@ public class LightlessFiles
         return builder.Uri;
     }
 
+    public static Uri WithDerivedFormat(Uri uri, string derived)
+        => WithQueryParameter(uri, DerivedFormatQueryParameter, derived);
+
+    private static Uri WithAscfUploadChunkQuery(Uri uri, Guid uploadId, long offset, long totalSize)
+    {
+        uri = WithQueryParameter(uri, AscfUploadIdQueryParameter, uploadId.ToString("N"));
+        uri = WithQueryParameter(uri, AscfUploadOffsetQueryParameter, offset.ToString(CultureInfo.InvariantCulture));
+        return WithQueryParameter(uri, AscfUploadTotalSizeQueryParameter, totalSize.ToString(CultureInfo.InvariantCulture));
+    }
+
     private static bool IsFileFormatQueryPart(string queryPart)
         => IsQueryParameterPart(queryPart, FileFormatQueryParameter);
+
+    private static string ServerFilesDerivedXubc7Path(string profile, string hash)
+        => ServerFiles
+            + "/"
+            + ServerFiles_Derived
+            + "/"
+            + ServerFiles_DerivedXubc7
+            + "/"
+            + Uri.EscapeDataString(profile)
+            + "/"
+            + Uri.EscapeDataString(hash);
 
     private static Uri WithQueryParameter(Uri uri, string name, string value)
     {
