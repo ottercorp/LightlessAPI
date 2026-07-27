@@ -10,7 +10,10 @@ public record ClientCapabilitiesDto(
 
     // Whether or not "delta updates" are supported. Specifically, whether the client
     // supports the PairReceiveVisualSingle, PairReceiveVisualDelta, and PairReceiveModDelta methods.
-    bool DeltaUpdates = false
+    bool DeltaUpdates = false,
+
+    // Whether temporary sync claims and edge updates are supported.
+    bool TemporarySync = false
 )
 {
     public const string ClientCapabilitiesHeader = "X-Client-Capabilities";

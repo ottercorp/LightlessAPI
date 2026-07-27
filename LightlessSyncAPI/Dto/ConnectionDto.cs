@@ -1,4 +1,5 @@
 using LightlessSync.API.Data;
+using LightlessSync.API.Data.Enum;
 using MessagePack;
 
 namespace LightlessSync.API.Dto;
@@ -34,6 +35,7 @@ public record ServerInfo
 public record ServerCapabilitiesDto
 {
     public FileTransferCapabilitiesDto FileTransfers { get; set; } = new();
+    public TemporarySyncCapabilitiesDto TemporarySync { get; set; } = new();
 }
 
 [MessagePackObject(keyAsPropertyName: true)]
@@ -45,6 +47,21 @@ public record FileTransferCapabilitiesDto
     public bool SupportsAscfChunkUpload { get; set; }
     public int AscfUploadChunkSizeBytes { get; set; }
     public long MaxUploadSizeBytes { get; set; }
-    public bool SupportsXuastcDerivedDownload { get; set; }
-    public string XuastcDerivedProfile { get; set; } = string.Empty;
+    public bool SupportsXubc7DerivedDownload { get; set; }
+    public string Xubc7DerivedProfile { get; set; } = string.Empty;
+}
+
+[MessagePackObject(keyAsPropertyName: true)]
+public record TemporarySyncCapabilitiesDto
+{
+    public bool Supported { get; set; }
+    public List<TemporarySyncSourceCapabilitiesDto> Sources { get; set; } = [];
+}
+
+[MessagePackObject(keyAsPropertyName: true)]
+public record TemporarySyncSourceCapabilitiesDto
+{
+    public TemporarySyncSource Source { get; set; }
+    public int MaxObservedPeers { get; set; }
+    public int ClaimTtlSeconds { get; set; }
 }
