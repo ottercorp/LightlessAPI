@@ -146,6 +146,4 @@ public interface ILightlessHub
     Task<PostingDto?> CommunityBoardEditPosting(PostingEditRequest request);
     Task CommunityBoardDeletePosting(Guid postingGuid);
 
-    Task<SignedIncompatiblePluginListDto> GetIncompatiblePlugins(string nonce);
-
 }
