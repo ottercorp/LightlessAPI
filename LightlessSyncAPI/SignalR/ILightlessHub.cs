@@ -148,7 +148,5 @@ public interface ILightlessHub
 
     Task Client_MoodlesShare(MoodlesDto moodlesDto);
     Task MoodlesShare(MoodlesDto moodlesDto);
-    
-    Task<SignedIncompatiblePluginListDto> GetIncompatiblePlugins(string nonce);
 
 }
