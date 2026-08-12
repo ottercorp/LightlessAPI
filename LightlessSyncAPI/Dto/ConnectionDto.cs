@@ -36,6 +36,7 @@ public record ServerCapabilitiesDto
 {
     public FileTransferCapabilitiesDto FileTransfers { get; set; } = new();
     public TemporarySyncCapabilitiesDto TemporarySync { get; set; } = new();
+    public ProfileMediaCapabilitiesDto ProfileMedia { get; set; } = new();
 }
 
 [MessagePackObject(keyAsPropertyName: true)]
@@ -64,4 +65,15 @@ public record TemporarySyncSourceCapabilitiesDto
     public TemporarySyncSource Source { get; set; }
     public int MaxObservedPeers { get; set; }
     public int ClaimTtlSeconds { get; set; }
+}
+
+[MessagePackObject(keyAsPropertyName: true)]
+public record ProfileMediaCapabilitiesDto
+{
+    public const int CurrentContractVersion = 1;
+
+    public bool Supported { get; set; }
+    public int ContractVersion { get; set; }
+    public bool Enabled { get; set; }
+    public int MaxEncodedImageBytes { get; set; }
 }

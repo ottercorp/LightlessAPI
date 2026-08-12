@@ -20,4 +20,11 @@ public record UserProfileDto(
     string? ProfilePictureUrl = null,
     string? BannerPictureUrl = null,
     string? ProfilePictureETag = null,
-    string? BannerPictureETag = null) : UserDto(User);
+    string? BannerPictureETag = null,
+    string? PortraitPictureBase64 = null,
+    string? PortraitPictureUrl = null,
+    string? PortraitPictureETag = null,
+    ProfileLayoutMode? Layout = null,
+    ProfileOpenMode? OpenMode = null,
+    string? PortraitFrameUrl = null,
+    string? PortraitFrameETag = null) : UserDto(User);

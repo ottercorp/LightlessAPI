@@ -18,4 +18,5 @@ public record GroupProfileDto(
     string? PictureUrl = null,
     string? BannerUrl = null,
     string? PictureETag = null,
-    string? BannerETag = null) : GroupDto(Group);
+    string? BannerETag = null,
+    int? MemberCount = null) : GroupDto(Group);
