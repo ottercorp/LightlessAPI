@@ -99,7 +99,6 @@ public interface ILightlessHub
     Task<List<UserFullPairDto>> UserGetPairedClients();
     Task<UserProfileDto> UserGetProfile(UserDto dto);
     Task<UserProfileDto?> UserGetLightfinderProfile(string hashedCid);
-    Task<ProfilePortraitFrameDto?> UserGetPortraitFrame();
     Task<IReadOnlyList<UserBlacklistDto>> UserGetBlacklistedUsers();
     Task TryUserBlacklistByHashedCid(string targetHashedCid);
     Task UserBlacklist(string targetUid);
@@ -114,7 +113,6 @@ public interface ILightlessHub
     Task UserUpdateVanityColors(UserVanityColorsDto dto);
     Task UserRemovePair(UserDto userDto);
     Task UserSetProfile(UserProfileDto userDescription);
-    Task UserSetPortraitFrame(ProfilePortraitFrameDto? frame);
     Task UserUpdateDefaultPermissions(DefaultPermissionsDto defaultPermissionsDto);
     Task SetBulkPermissions(BulkPermissionsDto dto);
 

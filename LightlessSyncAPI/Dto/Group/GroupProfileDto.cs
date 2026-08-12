@@ -7,8 +7,6 @@ public record GroupProfileDto(
     GroupData Group,
     string? Description,
     int[]? Tags,
-    string? PictureBase64,
-    string? BannerBase64,
     bool? IsNsfw,
     bool? IsDisabled,
     ProfileColorsDto? Colors = null,
