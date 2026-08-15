@@ -21,7 +21,5 @@ public record UserProfileDto(
     string? BannerPictureETag = null,
     string? PortraitPictureUrl = null,
     string? PortraitPictureETag = null,
-    ProfileLayoutMode? Layout = null,
-    ProfileOpenMode? OpenMode = null,
-    string? PortraitFrameUrl = null,
-    string? PortraitFrameETag = null) : UserDto(User);
+    ProfilePresentationDto? Presentation = null,
+    ProfileFrameAssetDto[]? FrameAssets = null) : UserDto(User);
