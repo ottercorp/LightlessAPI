@@ -8,7 +8,7 @@ public record GroupProfileDto(
     string? Description,
     int[]? Tags,
     bool? IsNsfw,
-    bool? IsDisabled,
+    bool? IsHidden,
     ProfileColorsDto? Colors = null,
     ProfileHousingDto? Housing = null,
     ProfileWorldDto? World = null,
@@ -17,4 +17,5 @@ public record GroupProfileDto(
     string? BannerUrl = null,
     string? PictureETag = null,
     string? BannerETag = null,
-    int? MemberCount = null) : GroupDto(Group);
+    int? MemberCount = null,
+    bool IsModerationDisabled = false) : GroupDto(Group);

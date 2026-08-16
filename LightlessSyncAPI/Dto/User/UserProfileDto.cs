@@ -7,7 +7,7 @@ namespace LightlessSync.API.Dto.User;
 [MessagePackObject(keyAsPropertyName: true)]
 public record UserProfileDto(
     UserData User,
-    bool Disabled,
+    bool IsModerationDisabled,
     bool? IsNSFW,
     string? Description,
     int[]? Tags,
