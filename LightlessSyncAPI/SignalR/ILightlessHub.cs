@@ -107,6 +107,7 @@ public interface ILightlessHub
     Task PairPushVisualDelta(PairOutboundDto<PairVisualDeltaDto> dto);
     Task PairPushModDelta(UserModDataMessageDto dto);
     Task<IReadOnlyList<TemporarySyncPairDto>> TemporarySyncUpdateClaims(TemporarySyncClaimDto dto);
+    Task<TemporarySyncClaimUpdateResultDto> TemporarySyncUpdateClaimsV2(TemporarySyncClaimDto dto);
     Task<IReadOnlyList<TemporarySyncPairDto>> TemporarySyncClearClaims(TemporarySyncSource source);
 
     Task UserPushData(UserCharaDataMessageDto dto);
