@@ -1,4 +1,4 @@
-﻿using LightlessSync.API.Data;
+using LightlessSync.API.Data;
 using LightlessSync.API.Data.Enum;
 using MessagePack;
 
@@ -8,4 +8,7 @@ namespace LightlessSync.API.Dto.Group;
 public record GroupPasswordDto(GroupData Group, string Password) : GroupDto(Group);
 
 [MessagePackObject(keyAsPropertyName: true)]
-public record GroupJoinDto(GroupData Group, string Password, GroupUserPreferredPermissions GroupUserPreferredPermissions) : GroupPasswordDto(Group, Password);
+public record GroupJoinDto(GroupData Group, string Password, GroupUserPreferredPermissions GroupUserPreferredPermissions) : GroupPasswordDto(Group, Password)
+{
+    public bool SubscribeToIntonerLayout { get; init; } = false;
+}

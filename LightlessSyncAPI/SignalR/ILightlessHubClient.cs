@@ -5,6 +5,8 @@ using LightlessSync.API.Dto.CharaData;
 using LightlessSync.API.Dto.Group;
 using LightlessSync.API.Dto.User;
 
+using LightlessSync.API.Dto.Intoner;
+
 namespace LightlessSync.API.SignalR;
 
 public interface ILightlessHubClient : ILightlessHub
@@ -36,6 +38,8 @@ public interface ILightlessHubClient : ILightlessHub
     void OnPairReceiveVisualDelta(Action<PairInboundDto<PairVisualDeltaDto>> act);
     void OnPairReceiveModDelta(Action<OnlineUserModDataDto> act);
     void OnTemporarySyncPairChanged(Action<TemporarySyncPairDto> act);
+    void OnIntonerLayoutCatalogChanged(Action act);
+    void OnIntonerLayoutCatalogEntriesChanged(Action<List<IntonerLayoutActivationKeyDto>> act);
     void OnUserReceiveUploadStatus(Action<UserDto> act);
 
     void OnUserRemoveClientPair(Action<UserDto> act);
