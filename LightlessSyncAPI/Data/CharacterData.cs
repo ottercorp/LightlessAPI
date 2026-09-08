@@ -34,4 +34,5 @@ public class CharacterData
     public string ManipulationData { get; set; } = string.Empty;
     public string MoodlesData { get; set; } = string.Empty;
     public string PetNamesData { get; set; } = string.Empty;
+    public PulsarData? PulsarData { get; set; }
 }

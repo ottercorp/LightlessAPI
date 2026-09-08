@@ -7,10 +7,8 @@ namespace LightlessSync.API.Dto.User;
 [MessagePackObject(keyAsPropertyName: true)]
 public record UserProfileDto(
     UserData User,
-    bool Disabled,
+    bool IsModerationDisabled,
     bool? IsNSFW,
-    string? ProfilePictureBase64,
-    string? BannerPictureBase64,
     string? Description,
     int[]? Tags,
     ProfileColorsDto? Colors = null,
@@ -20,4 +18,8 @@ public record UserProfileDto(
     string? ProfilePictureUrl = null,
     string? BannerPictureUrl = null,
     string? ProfilePictureETag = null,
-    string? BannerPictureETag = null) : UserDto(User);
+    string? BannerPictureETag = null,
+    string? PortraitPictureUrl = null,
+    string? PortraitPictureETag = null,
+    ProfilePresentationDto? Presentation = null,
+    ProfileFrameAssetDto[]? FrameAssets = null) : UserDto(User);

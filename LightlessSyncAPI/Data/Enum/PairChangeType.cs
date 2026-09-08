@@ -12,6 +12,7 @@ public enum PairChangeType
     PetNames = 1 << 5,
     Manipulation = 1 << 6,
     ModdedPaths = 1 << 7,
+    Pulsar = 1 << 8,
 }
 
 public static class PairChangeTypeExtensions
@@ -23,7 +24,8 @@ public static class PairChangeTypeExtensions
         | PairChangeType.Honorific
         | PairChangeType.Moodles
         | PairChangeType.PetNames
-        | PairChangeType.Manipulation;
+        | PairChangeType.Manipulation
+        | PairChangeType.Pulsar;
 
     public static bool IsVisualOnly(this PairChangeType types)
         => types != PairChangeType.None
@@ -36,5 +38,6 @@ public static class PairChangeTypeExtensions
             or PairChangeType.Honorific
             or PairChangeType.Moodles
             or PairChangeType.PetNames
-            or PairChangeType.Manipulation;
+            or PairChangeType.Manipulation
+            or PairChangeType.Pulsar;
 }

@@ -5,13 +5,15 @@ using LightlessSync.API.Dto.Chat;
 using LightlessSync.API.Dto.CharaData;
 using LightlessSync.API.Dto.CommunityBoard;
 using LightlessSync.API.Dto.Group;
+using LightlessSync.API.Dto.Intoner;
+using LightlessSync.API.Dto.Profile;
 using LightlessSync.API.Dto.User;
 
 namespace LightlessSync.API.SignalR;
 
 public interface ILightlessHub
 {
-    const int ApiVersion = 37;
+    const int ApiVersion = 38;
     const string Path = "/lightless";
 
     Task<bool> CheckClientHealth();
@@ -34,6 +36,8 @@ public interface ILightlessHub
     Task Client_PairReceiveVisualDelta(PairInboundDto<PairVisualDeltaDto> dataDto);
     Task Client_PairReceiveModDelta(OnlineUserModDataDto dataDto);
     Task Client_TemporarySyncPairChanged(TemporarySyncPairDto dto);
+    Task Client_IntonerLayoutCatalogChanged();
+    Task Client_IntonerLayoutCatalogEntriesChanged(List<IntonerLayoutActivationKeyDto> keys);
     Task Client_UserReceiveUploadStatus(UserDto dto);
     Task Client_UserRemoveClientPair(UserDto dto);
     Task Client_UserSendOffline(UserDto dto);
@@ -57,6 +61,12 @@ public interface ILightlessHub
     Task<ConnectionDto> GetConnectionDto();
     Task<IReadOnlyList<ZoneChatChannelInfoDto>> GetZoneChatChannels();
     Task<IReadOnlyList<GroupChatChannelInfoDto>> GetGroupChatChannels();
+    Task<IntonerLayoutCatalogDto> IntonerLayoutsGetCatalog();
+    Task<IntonerLayoutCatalogDto> IntonerLayoutsGetCatalogEntries(List<IntonerLayoutActivationKeyDto> keys);
+    Task IntonerLayoutsRenewPersonalLease();
+    Task<IntonerLayoutPersonalAudienceDto> IntonerLayoutSetPersonalAudience(IntonerLayoutPersonalAudienceDto dto);
+    Task<IntonerLayoutIntentMutationResultDto> IntonerLayoutSetPairOptIn(IntonerLayoutPairOptInDto dto);
+    Task<IntonerLayoutIntentMutationResultDto> IntonerLayoutSetSyncshellSubscription(IntonerLayoutSyncshellSubscriptionDto dto);
 
     Task GroupBanUser(GroupPairDto dto, string reason);
     Task GroupChangeGroupPermissionState(GroupPermissionDto dto);
@@ -106,6 +116,7 @@ public interface ILightlessHub
     Task PairPushVisualDelta(PairOutboundDto<PairVisualDeltaDto> dto);
     Task PairPushModDelta(UserModDataMessageDto dto);
     Task<IReadOnlyList<TemporarySyncPairDto>> TemporarySyncUpdateClaims(TemporarySyncClaimDto dto);
+    Task<TemporarySyncClaimUpdateResultDto> TemporarySyncUpdateClaimsV2(TemporarySyncClaimDto dto);
     Task<IReadOnlyList<TemporarySyncPairDto>> TemporarySyncClearClaims(TemporarySyncSource source);
 
     Task UserPushData(UserCharaDataMessageDto dto);
@@ -123,7 +134,7 @@ public interface ILightlessHub
     Task<List<CharaDataFullDto>> CharaDataGetOwn();
     Task<List<CharaDataMetaInfoDto>> CharaDataGetShared();
     Task<CharaDataFullDto?> CharaDataAttemptRestore(string id);
-    
+
     Task<string> GposeLobbyCreate();
     Task<List<UserData>> GposeLobbyJoin(string lobbyId);
     Task<bool> GposeLobbyLeave();
@@ -140,13 +151,13 @@ public interface ILightlessHub
     Task<bool> ToggleLocationSharing(LocationSharingToggleDto dto);
     Task<List<GroupUserDto>> GroupGetUsers(GroupDto dto);
     Task ApplyMoodles(UserData target, string data);
+    
+    Task Client_MoodlesShare(MoodlesDto moodlesDto);
+    Task MoodlesShare(MoodlesDto moodlesDto);
 
     Task<List<PostingDto>> CommunityBoardGetPostings(World callerWorld);
     Task<PostingDto?> CommunityBoardCreatePosting(PostingCreateRequest request);
     Task<PostingDto?> CommunityBoardEditPosting(PostingEditRequest request);
     Task CommunityBoardDeletePosting(Guid postingGuid);
-
-    Task Client_MoodlesShare(MoodlesDto moodlesDto);
-    Task MoodlesShare(MoodlesDto moodlesDto);
 
 }
