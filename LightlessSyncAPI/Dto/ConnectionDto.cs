@@ -36,6 +36,8 @@ public record ServerCapabilitiesDto
 {
     public FileTransferCapabilitiesDto FileTransfers { get; set; } = new();
     public TemporarySyncCapabilitiesDto TemporarySync { get; set; } = new();
+    public ProfileMediaCapabilitiesDto ProfileMedia { get; set; } = new();
+    public IntonerLayoutCapabilitiesDto IntonerLayouts { get; set; } = new();
 }
 
 [MessagePackObject(keyAsPropertyName: true)]
@@ -64,4 +66,36 @@ public record TemporarySyncSourceCapabilitiesDto
     public TemporarySyncSource Source { get; set; }
     public int MaxObservedPeers { get; set; }
     public int ClaimTtlSeconds { get; set; }
+}
+
+[MessagePackObject(keyAsPropertyName: true)]
+public record ProfileMediaCapabilitiesDto
+{
+    public const int CurrentContractVersion = 1;
+
+    public bool Supported { get; set; }
+    public int ContractVersion { get; set; }
+    public bool Enabled { get; set; }
+    public int MaxEncodedImageBytes { get; set; }
+}
+
+[MessagePackObject(keyAsPropertyName: true)]
+public record IntonerLayoutCapabilitiesDto
+{
+    public bool Supported { get; set; }
+    /// <summary>Whether Intoner layout sharing is currently enabled.</summary>
+    public bool Enabled { get; set; }
+    /// <summary>Snapshot format versions this server can validate and serve.</summary>
+    public List<int> SupportedSnapshotFormatVersions { get; set; } = [];
+    /// <summary>Snapshot limits are zero when no snapshot format version is supported.</summary>
+    public int MaxCompressedSnapshotBytes { get; set; }
+    public int MaxDecompressedSnapshotBytes { get; set; }
+    public int MaxObjectCount { get; set; }
+    public int MaxCollectionCount { get; set; }
+    public int MaxRedirectCount { get; set; }
+    public int MaxResourceCount { get; set; }
+    public long MaxIndividualResourceBytes { get; set; }
+    public long MaxTotalResourceBytes { get; set; }
+    public int MaxNameCharacters { get; set; }
+    public int MaxDescriptionCharacters { get; set; }
 }
