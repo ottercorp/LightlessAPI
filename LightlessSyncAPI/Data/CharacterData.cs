@@ -2,7 +2,6 @@
 using MessagePack;
 using System.Security.Cryptography;
 
-using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -13,14 +12,17 @@ public class CharacterData
 {
     public CharacterData()
     {
-        DataHash = new(() =>
-        {
-            var json = JsonSerializer.Serialize(this);
-#pragma warning disable SYSLIB0021 // Type or member is obsolete
-            using SHA256CryptoServiceProvider cryptoProvider = new();
-#pragma warning restore SYSLIB0021 // Type or member is obsolete
-            return BitConverter.ToString(cryptoProvider.ComputeHash(Encoding.UTF8.GetBytes(json))).Replace("-", "", StringComparison.Ordinal);
-        });
+        DataHash = new(ComputeDataHash);
+    }
+
+    private string ComputeDataHash()
+    {
+        using IncrementalHash hasher = IncrementalHash.CreateHash(HashAlgorithmName.SHA256);
+        using HashWriteStream stream = new(hasher);
+        JsonSerializer.Serialize(stream, this);
+        Span<byte> hash = stackalloc byte[SHA256.HashSizeInBytes];
+        hasher.GetHashAndReset(hash);
+        return Convert.ToHexString(hash);
     }
 
     public Dictionary<ObjectKind, string> CustomizePlusData { get; set; } = new();
@@ -35,4 +37,19 @@ public class CharacterData
     public string MoodlesData { get; set; } = string.Empty;
     public string PetNamesData { get; set; } = string.Empty;
     public PulsarData? PulsarData { get; set; }
+
+    private sealed class HashWriteStream(IncrementalHash hasher) : Stream
+    {
+        public override bool CanRead => false;
+        public override bool CanSeek => false;
+        public override bool CanWrite => true;
+        public override long Length => throw new NotSupportedException();
+        public override long Position { get => throw new NotSupportedException(); set => throw new NotSupportedException(); }
+        public override void Flush() { }
+        public override void Write(byte[] buffer, int offset, int count) => hasher.AppendData(buffer, offset, count);
+        public override void Write(ReadOnlySpan<byte> buffer) => hasher.AppendData(buffer);
+        public override int Read(byte[] buffer, int offset, int count) => throw new NotSupportedException();
+        public override long Seek(long offset, SeekOrigin origin) => throw new NotSupportedException();
+        public override void SetLength(long value) => throw new NotSupportedException();
+    }
 }
