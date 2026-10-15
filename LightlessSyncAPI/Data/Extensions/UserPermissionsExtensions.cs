@@ -6,27 +6,27 @@ public static class UserPermissionsExtensions
 {
     public static bool IsDisableAnimations(this UserPermissions perm)
     {
-        return perm.HasFlag(UserPermissions.DisableAnimations);
+        return (perm & UserPermissions.DisableAnimations) == UserPermissions.DisableAnimations;
     }
 
     public static bool IsDisableSounds(this UserPermissions perm)
     {
-        return perm.HasFlag(UserPermissions.DisableSounds);
+        return (perm & UserPermissions.DisableSounds) == UserPermissions.DisableSounds;
     }
 
     public static bool IsDisableVFX(this UserPermissions perm)
     {
-        return perm.HasFlag(UserPermissions.DisableVFX);
+        return (perm & UserPermissions.DisableVFX) == UserPermissions.DisableVFX;
     }
 
     public static bool IsPaused(this UserPermissions perm)
     {
-        return perm.HasFlag(UserPermissions.Paused);
+        return (perm & UserPermissions.Paused) == UserPermissions.Paused;
     }
 
     public static bool IsSticky(this UserPermissions perm)
     {
-        return perm.HasFlag(UserPermissions.Sticky);
+        return (perm & UserPermissions.Sticky) == UserPermissions.Sticky;
     }
 
     public static void SetDisableAnimations(this ref UserPermissions perm, bool set)

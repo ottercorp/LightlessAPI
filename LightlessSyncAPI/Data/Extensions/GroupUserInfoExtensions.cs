@@ -6,12 +6,12 @@ public static class GroupUserInfoExtensions
 {
     public static bool IsModerator(this GroupPairUserInfo info)
     {
-        return info.HasFlag(GroupPairUserInfo.IsModerator);
+        return (info & GroupPairUserInfo.IsModerator) == GroupPairUserInfo.IsModerator;
     }
 
     public static bool IsPinned(this GroupPairUserInfo info)
     {
-        return info.HasFlag(GroupPairUserInfo.IsPinned);
+        return (info & GroupPairUserInfo.IsPinned) == GroupPairUserInfo.IsPinned;
     }
 
     public static void SetModerator(this ref GroupPairUserInfo info, bool isModerator)

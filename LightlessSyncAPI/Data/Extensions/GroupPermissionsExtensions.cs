@@ -6,27 +6,27 @@ public static class GroupPermissionsExtensions
 {
     public static bool IsDisableInvites(this GroupPermissions perm)
     {
-        return perm.HasFlag(GroupPermissions.DisableInvites);
+        return (perm & GroupPermissions.DisableInvites) == GroupPermissions.DisableInvites;
     }
 
     public static bool IsPreferDisableAnimations(this GroupPermissions perm)
     {
-        return perm.HasFlag(GroupPermissions.PreferDisableAnimations);
+        return (perm & GroupPermissions.PreferDisableAnimations) == GroupPermissions.PreferDisableAnimations;
     }
 
     public static bool IsPreferDisableSounds(this GroupPermissions perm)
     {
-        return perm.HasFlag(GroupPermissions.PreferDisableSounds);
+        return (perm & GroupPermissions.PreferDisableSounds) == GroupPermissions.PreferDisableSounds;
     }
 
     public static bool IsPreferDisableVFX(this GroupPermissions perm)
     {
-        return perm.HasFlag(GroupPermissions.PreferDisableVFX);
+        return (perm & GroupPermissions.PreferDisableVFX) == GroupPermissions.PreferDisableVFX;
     }
 
     public static bool IsDisableChat(this GroupPermissions perm)
     {
-        return perm.HasFlag(GroupPermissions.DisableChat);
+        return (perm & GroupPermissions.DisableChat) == GroupPermissions.DisableChat;
     }
 
     public static void SetDisableInvites(this ref GroupPermissions perm, bool set)

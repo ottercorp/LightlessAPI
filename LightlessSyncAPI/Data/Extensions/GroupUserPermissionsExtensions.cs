@@ -6,22 +6,22 @@ public static class GroupUserPermissionsExtensions
 {
     public static bool IsDisableAnimations(this GroupUserPreferredPermissions perm)
     {
-        return perm.HasFlag(GroupUserPreferredPermissions.DisableAnimations);
+        return (perm & GroupUserPreferredPermissions.DisableAnimations) == GroupUserPreferredPermissions.DisableAnimations;
     }
 
     public static bool IsDisableSounds(this GroupUserPreferredPermissions perm)
     {
-        return perm.HasFlag(GroupUserPreferredPermissions.DisableSounds);
+        return (perm & GroupUserPreferredPermissions.DisableSounds) == GroupUserPreferredPermissions.DisableSounds;
     }
 
     public static bool IsDisableVFX(this GroupUserPreferredPermissions perm)
     {
-        return perm.HasFlag(GroupUserPreferredPermissions.DisableVFX);
+        return (perm & GroupUserPreferredPermissions.DisableVFX) == GroupUserPreferredPermissions.DisableVFX;
     }
 
     public static bool IsPaused(this GroupUserPreferredPermissions perm)
     {
-        return perm.HasFlag(GroupUserPreferredPermissions.Paused);
+        return (perm & GroupUserPreferredPermissions.Paused) == GroupUserPreferredPermissions.Paused;
     }
 
     public static void SetDisableAnimations(this ref GroupUserPreferredPermissions perm, bool set)
