@@ -154,7 +154,7 @@ namespace LightlessSync.API.Routing
                 || value.AbsolutePath != "/" || value.UserInfo.Length != 0
                 || value.Query.Length != 0 || value.Fragment.Length != 0)
                 return false;
-            normalized = new Uri(value.GetLeftPart(UriPartial.Authority) + "/", UriKind.Absolute);
+            normalized = new UriBuilder(value.Scheme, value.IdnHost, value.Port).Uri;
             return true;
         }
 
