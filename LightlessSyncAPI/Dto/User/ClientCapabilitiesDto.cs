@@ -1,3 +1,4 @@
+using MessagePack;
 using System.Text.Json;
 
 namespace LightlessSync.API.Dto.User;
@@ -5,6 +6,7 @@ namespace LightlessSync.API.Dto.User;
 // All fields MUST have a default. This is sent by the client in the header.
 // Old clients will NOT send all fields. Third-party clients will NOT send all fields.
 // Use a reasonable default for each.
+[MessagePackObject(keyAsPropertyName: true)]
 public record ClientCapabilitiesDto(
     string ClientVersion = "unknown",
 

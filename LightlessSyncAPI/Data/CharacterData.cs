@@ -27,6 +27,7 @@ public class CharacterData
 
     public Dictionary<ObjectKind, string> CustomizePlusData { get; set; } = new();
     [JsonIgnore]
+    [IgnoreMember]
     public Lazy<string> DataHash { get; }
 
     public Dictionary<ObjectKind, List<FileReplacementData>> FileReplacements { get; set; } = new();

@@ -16,5 +16,5 @@ public sealed record IntonerLayoutSnapshotDto(
     [property: Key(6)] List<IntonerLayoutCollectionDto> Collections,
     [property: Key(7)] List<IntonerLayoutResourceDto> Resources)
 {
-    public const int CurrentFormatVersion = 1;
+    public const int CurrentFormatVersion = 2;
 }

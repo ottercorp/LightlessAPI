@@ -11,6 +11,8 @@ public static class IntonerLayoutSnapshotNormalizer
     public const int MaxCollectionNameCharacters = 256;
     public const int MaxLocationNameCharacters = 128;
     public const int MaxGamePathCharacters = 1024;
+    public const int MaxDataCenterIds = 256;
+    public const int MaxWorldIds = 1024;
 
     public static IntonerLayoutSnapshotDto Normalize(IntonerLayoutSnapshotDto snapshot)
     {
@@ -99,33 +101,55 @@ public static class IntonerLayoutSnapshotNormalizer
         return collections;
     }
 
-    private static List<IntonerLayoutLocationDto> NormalizeLocations(IReadOnlyList<IntonerLayoutLocationDto> source)
+    public static List<IntonerLayoutLocationDto> NormalizeLocations(IReadOnlyList<IntonerLayoutLocationDto> source)
     {
         var locations = new List<IntonerLayoutLocationDto>(source.Count);
         foreach (var location in source)
         {
             if (location is null)
                 throw Invalid("The location list contains an empty entry.");
-            locations.Add(NormalizeLocation(location));
+            ValidateWorldSelection(location.Worlds);
+            locations.Add(location with
+            {
+                TerritoryName = NormalizeText(location.TerritoryName, "territory name", MaxLocationNameCharacters, required: false),
+            });
         }
 
-        return locations.Distinct()
-            .OrderBy(static location => location.WorldId)
-            .ThenBy(static location => location.TerritoryId)
+        var grouped = new List<IntonerLayoutLocationDto>();
+        foreach (var address in locations.GroupBy(static location => (location.TerritoryId,
+                     location.DivisionId, location.WardId, location.HouseId, location.RoomId)))
+        {
+            var first = address.OrderBy(static location => location.TerritoryName, StringComparer.Ordinal).First();
+            var allDataCenters = address.Any(static location => location.Worlds.AllDataCenters);
+            var worlds = allDataCenters
+                ? new IntonerLayoutWorldSelectionDto(true, [], [])
+                : new IntonerLayoutWorldSelectionDto(false,
+                    address.SelectMany(static location => location.Worlds.DataCenterIds).Distinct().Order().ToArray(),
+                    address.SelectMany(static location => location.Worlds.WorldIds).Distinct().Order().ToArray());
+            ValidateWorldSelection(worlds);
+            grouped.Add(first with { Worlds = worlds });
+        }
+
+        return grouped.OrderBy(static location => location.TerritoryId)
             .ThenBy(static location => location.DivisionId)
             .ThenBy(static location => location.WardId)
             .ThenBy(static location => location.HouseId)
             .ThenBy(static location => location.RoomId)
-            .ThenBy(static location => location.WorldName, StringComparer.Ordinal)
-            .ThenBy(static location => location.TerritoryName, StringComparer.Ordinal)
             .ToList();
     }
 
-    private static IntonerLayoutLocationDto NormalizeLocation(IntonerLayoutLocationDto location) =>
-        new(location.WorldId, NormalizeText(location.WorldName, "world name", MaxLocationNameCharacters, required: false),
-            location.TerritoryId,
-            NormalizeText(location.TerritoryName, "territory name", MaxLocationNameCharacters, required: false),
-            location.DivisionId, location.WardId, location.HouseId, location.RoomId);
+    private static void ValidateWorldSelection(IntonerLayoutWorldSelectionDto? worlds)
+    {
+        if (worlds?.DataCenterIds is null || worlds.WorldIds is null
+            || worlds.DataCenterIds.Length > MaxDataCenterIds || worlds.WorldIds.Length > MaxWorldIds
+            || worlds.DataCenterIds.Contains(0u)
+            || (worlds.AllDataCenters
+                ? worlds.DataCenterIds.Length != 0 || worlds.WorldIds.Length != 0
+                : worlds.DataCenterIds.Length == 0 && worlds.WorldIds.Length == 0))
+        {
+            throw Invalid("The location world selection is invalid.");
+        }
+    }
 
     private static IntonerLayoutCollectionReplacementDto NormalizeReplacement(
         IntonerLayoutCollectionReplacementDto replacement, string requestedPath)
@@ -175,7 +199,7 @@ public static class IntonerLayoutSnapshotNormalizer
         return string.Join('/', segments).ToLowerInvariant();
     }
 
-    private static string NormalizeText(string? value, string field, int maxCharacters, bool required)
+    public static string NormalizeText(string? value, string field, int maxCharacters, bool required)
     {
         var text = (value ?? string.Empty).Trim();
         try
@@ -202,7 +226,7 @@ public static class IntonerLayoutSnapshotNormalizer
     private static IntonerLayoutSnapshotContractException Invalid(string message) => new(message);
 }
 
-public sealed class IntonerLayoutSnapshotContractException : Exception
+public class IntonerLayoutSnapshotContractException : Exception
 {
     public IntonerLayoutSnapshotContractException(string message) : base(message)
     {
@@ -212,3 +236,5 @@ public sealed class IntonerLayoutSnapshotContractException : Exception
     {
     }
 }
+
+public sealed class IntonerLayoutSnapshotQuotaException(string message) : IntonerLayoutSnapshotContractException(message);

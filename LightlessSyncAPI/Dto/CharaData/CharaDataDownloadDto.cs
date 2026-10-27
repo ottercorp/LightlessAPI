@@ -3,7 +3,7 @@ using MessagePack;
 
 namespace LightlessSync.API.Dto.CharaData;
 
-[MessagePackObject(keyAsPropertyName: true)]
+[MessagePackObject(keyAsPropertyName: true, SuppressSourceGeneration = true)]
 public record CharaDataDownloadDto(string Id, UserData Uploader) : CharaDataDto(Id, Uploader)
 {
     public string GlamourerData { get; init; } = string.Empty;

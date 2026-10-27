@@ -3,7 +3,7 @@ using MessagePack;
 
 namespace LightlessSync.API.Dto.CharaData;
 
-[MessagePackObject(keyAsPropertyName: true)]
+[MessagePackObject(keyAsPropertyName: true, SuppressSourceGeneration = true)]
 public record CharaDataMetaInfoDto(string Id, UserData Uploader) : CharaDataDto(Id, Uploader)
 {
     public bool CanBeDownloaded { get; init; }
