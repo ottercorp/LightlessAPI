@@ -1,4 +1,5 @@
 using LightlessSync.API.Data.Enum;
+using LightlessSync.API.Dto.Intoner.Snapshot;
 using MessagePack;
 
 namespace LightlessSync.API.Dto.Intoner;
@@ -21,4 +22,6 @@ public sealed record IntonerLayoutSummaryDto(
     bool HasNonResidentialLocations = false)
 {
     public const int MaxPreviewTerritories = 3;
+    public const int MaxPreviewLocations = 3;
+    public IReadOnlyList<IntonerLayoutLocationDto>? PreviewLocations { get; init; }
 }

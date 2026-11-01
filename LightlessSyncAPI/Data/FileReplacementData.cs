@@ -22,6 +22,7 @@ public class FileReplacementData
     }
 
     [JsonIgnore]
+    [IgnoreMember]
     public Lazy<string> DataHash { get; }
     public string FileSwapPath { get; set; } = string.Empty;
     public string[] GamePaths { get; set; } = Array.Empty<string>();

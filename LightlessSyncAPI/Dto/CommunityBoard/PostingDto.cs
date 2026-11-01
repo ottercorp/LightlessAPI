@@ -22,7 +22,7 @@ public record PostingLocationDto
     public string? CustomString { get; init; }
 }
 
-[MessagePackObject(keyAsPropertyName: true)]
+[MessagePackObject(keyAsPropertyName: true, SuppressSourceGeneration = true)]
 public record PostingDto
 {
     public Guid Guid { get; init; }
@@ -47,7 +47,7 @@ public record PostingDto
     public string? BannerImageETag { get; init; }
 }
 
-[MessagePackObject(keyAsPropertyName: true)]
+[MessagePackObject(keyAsPropertyName: true, SuppressSourceGeneration = true)]
 public record PostingCreateRequest
 {
     public DateTimeOffset StartTime { get; init; }
@@ -66,7 +66,7 @@ public record PostingCreateRequest
     public PostingLocationDto? Location { get; init; }
 }
 
-[MessagePackObject(keyAsPropertyName: true)]
+[MessagePackObject(keyAsPropertyName: true, SuppressSourceGeneration = true)]
 public record PostingEditRequest
 {
     public Guid Guid { get; init; }

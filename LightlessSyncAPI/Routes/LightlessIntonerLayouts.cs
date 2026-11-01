@@ -8,6 +8,7 @@ public static class LightlessIntonerLayouts
     public const string SnapshotContentType = "application/vnd.lightless.intoner-layout-v1+msgpack";
     public const string PublicationRequestContentType = "application/vnd.lightless.intoner-publication-v1+msgpack";
     public const string BrotliContentEncoding = "br";
+    public const int PublicationFramingAllowanceBytes = 16 * 1024;
     public const string SnapshotFormatVersionHeader = "X-Lightless-Intoner-Snapshot-Format-Version";
     public const string SnapshotSha256Header = "X-Lightless-Intoner-Snapshot-SHA256";
     public const string PublicationRevisionHeader = "X-Lightless-Intoner-Publication-Revision";

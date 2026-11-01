@@ -1,12 +1,11 @@
 using LightlessSync.API.Data;
 using LightlessSync.API.Data.Enum;
 using LightlessSync.API.Dto;
-using LightlessSync.API.Dto.Chat;
 using LightlessSync.API.Dto.CharaData;
+using LightlessSync.API.Dto.Chat;
 using LightlessSync.API.Dto.CommunityBoard;
 using LightlessSync.API.Dto.Group;
 using LightlessSync.API.Dto.Intoner;
-using LightlessSync.API.Dto.Profile;
 using LightlessSync.API.Dto.User;
 
 namespace LightlessSync.API.SignalR;
@@ -61,8 +60,9 @@ public interface ILightlessHub
     Task<ConnectionDto> GetConnectionDto();
     Task<IReadOnlyList<ZoneChatChannelInfoDto>> GetZoneChatChannels();
     Task<IReadOnlyList<GroupChatChannelInfoDto>> GetGroupChatChannels();
-    Task<IntonerLayoutCatalogDto> IntonerLayoutsGetCatalog();
-    Task<IntonerLayoutCatalogDto> IntonerLayoutsGetCatalogEntries(List<IntonerLayoutActivationKeyDto> keys);
+    Task<IntonerLayoutCatalogDto> IntonerLayoutsGetCatalog(CancellationToken cancellationToken = default);
+    Task<IntonerLayoutCatalogDto> IntonerLayoutsGetCatalogEntries(List<IntonerLayoutActivationKeyDto> keys,
+        CancellationToken cancellationToken = default);
     Task IntonerLayoutsRenewPersonalLease();
     Task<IntonerLayoutPersonalAudienceDto> IntonerLayoutSetPersonalAudience(IntonerLayoutPersonalAudienceDto dto);
     Task<IntonerLayoutIntentMutationResultDto> IntonerLayoutSetPairOptIn(IntonerLayoutPairOptInDto dto);

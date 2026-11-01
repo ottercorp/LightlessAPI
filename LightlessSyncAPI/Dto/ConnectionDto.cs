@@ -34,6 +34,7 @@ public record ServerInfo
 [MessagePackObject(keyAsPropertyName: true)]
 public record ServerCapabilitiesDto
 {
+    public bool SupportsAuthenticationRefresh { get; set; }
     public FileTransferCapabilitiesDto FileTransfers { get; set; } = new();
     public TemporarySyncCapabilitiesDto TemporarySync { get; set; } = new();
     public ProfileMediaCapabilitiesDto ProfileMedia { get; set; } = new();

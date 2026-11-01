@@ -4,7 +4,7 @@ using MessagePack;
 
 namespace LightlessSync.API.Dto.User;
 
-[MessagePackObject(keyAsPropertyName: true)]
+[MessagePackObject(keyAsPropertyName: true, SuppressSourceGeneration = true)]
 public sealed record PairModDeltaDto
 {
     public Dictionary<ObjectKind, List<FileReplacementData>> FileReplacements { get; init; } = new();
