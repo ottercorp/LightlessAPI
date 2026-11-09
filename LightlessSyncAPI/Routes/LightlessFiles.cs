@@ -4,6 +4,9 @@ namespace LightlessSync.API.Routes;
 
 public class LightlessFiles
 {
+    public static bool IsDownloadUri(Uri? uri)
+        => uri is { IsAbsoluteUri: true } && uri.UserInfo.Length == 0 && uri.Scheme is "https" or "http";
+
     public const string Cache = "/cache";
     public const string Cache_Get = "get";
 
@@ -17,6 +20,7 @@ public class LightlessFiles
     public const string ServerFiles_DeleteAll = "deleteAll";
     public const string ServerFiles_FilesSend = "filesSend";
     public const string ServerFiles_GetSizes = "getFileSizes";
+    public const string ServerFiles_DownloadPlan = "downloadPlan";
     public const string ServerFiles_Upload = "upload";
     public const string ServerFiles_UploadMunged = "uploadMunged";
     public const string ServerFiles_UploadAscf = "uploadAscf";
@@ -38,6 +42,8 @@ public class LightlessFiles
     public const string FileFormatWrappedLz4 = "lz4";
     public const string FileFormatAscf = "ascf";
     public const string FileFormatResponseHeader = "X-Lightless-File-Format";
+    public const string RetryScopeResponseHeader = "X-Lightless-Retry-Scope";
+    public const string RetryScopeOrigin = "origin";
     public const string DerivedFormatQueryParameter = "derived";
     public const string Derived_Xubc7 = "xubc7";
     public const string DerivedXubc7DefaultProfile = "default";
@@ -84,6 +90,14 @@ public class LightlessFiles
             ? uri
             : WithDerivedFormat(uri, derived);
     }
+    public static Uri ServerFilesDownloadPlanFullPath(Uri baseUri, string? format = null, string? derived = null)
+    {
+        var uri = new Uri(baseUri, ServerFiles + "/" + ServerFiles_DownloadPlan);
+        if (!string.IsNullOrWhiteSpace(format))
+            uri = WithFileFormat(uri, format);
+        return string.IsNullOrWhiteSpace(derived) ? uri : WithDerivedFormat(uri, derived);
+    }
+
     public static Uri ServerFilesUploadFullPath(Uri baseUri, string hash) => new(baseUri, ServerFiles + "/" + ServerFiles_Upload + "/" + hash);
     public static Uri ServerFilesUploadMunged(Uri baseUri, string hash) => new(baseUri, ServerFiles + "/" + ServerFiles_UploadMunged + "/" + hash);
     public static Uri ServerFilesUploadAscfFullPath(Uri baseUri, string hash) => new(baseUri, ServerFiles + "/" + ServerFiles_UploadAscf + "/" + hash);
