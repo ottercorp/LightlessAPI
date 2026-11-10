@@ -34,6 +34,24 @@ public sealed partial record DownloadPlanDto
         byte[] bytes = MessagePackSerializer.Serialize(this, Options);
         if (bytes.Length > MaximumBytes)
             throw new InvalidDataException("Download plan exceeds the response limit.");
+        MessagePackReader reader = new(bytes);
+        _ = reader.ReadArrayHeader();
+        if (reader.NextMessagePackType == MessagePackType.Extension)
+        {
+            var header = reader.ReadExtensionFormat();
+            if (header.TypeCode != ReservedExtensionTypeCodes.Lz4BlockArray)
+                throw new InvalidDataException("Download plan uses an unexpected compression envelope.");
+
+            MessagePackReader lengths = new(header.Data);
+            int remaining = MaximumBytes;
+            while (!lengths.End)
+            {
+                int length = lengths.ReadInt32();
+                if ((uint)length > (uint)remaining)
+                    throw new InvalidDataException("Download plan exceeds the decompressed response limit.");
+                remaining -= length;
+            }
+        }
         return bytes;
     }
 
