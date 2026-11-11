@@ -1,4 +1,4 @@
-﻿namespace LightlessSync.API.Routes;
+namespace LightlessSync.API.Routes;
 
 public class LightlessAuth
 {
@@ -20,6 +20,11 @@ public class LightlessAuth
     public const string OAuth_DiscordCallback = "discordCallback";
     public const string XIVAuth_GetEndpoint = "plugin/endpoint";
     public const string XIVAuth_GetToken = "plugin/token";
+    public const string XIVAuth_GetProtectedToken = "plugin/token-v2";
+    public const string XIVAuth_ProtectedPluginLogin = "plugin/login-v2";
+    public const string XIVAuth_ProtocolHeader = "X-Lightless-XIVAuth-Protocol";
+    public const string XIVAuth_VerifierHeader = "X-Lightless-XIVAuth-Verifier";
+    public const string XIVAuth_ProtectedProtocol = "2";
     public const string XIVAuth_PluginLogin = "plugin/login";
     public const string XIVAuth_PluginCallback = "plugin/callback";
     public const string User = "/user";
@@ -39,4 +44,5 @@ public class LightlessAuth
     public static Uri GetUIDsFullPath(Uri baseUri) => new Uri(baseUri, OAuth + "/" + OAuth_GetUIDs);
     public static Uri GetXIVAuthEndpointFullPath(Uri baseUri) => new Uri(baseUri, XIVAuth + "/" + XIVAuth_GetEndpoint);
     public static Uri GetXIVAuthTokenFullPath(Uri baseUri, string sessionId) => new Uri(baseUri, XIVAuth + "/" + XIVAuth_GetToken + "?sessionId=" + sessionId);
+    public static Uri GetXIVAuthProtectedTokenFullPath(Uri baseUri, string sessionId) => new Uri(baseUri, XIVAuth + "/" + XIVAuth_GetProtectedToken + "?sessionId=" + Uri.EscapeDataString(sessionId));
 }
